@@ -26,12 +26,12 @@ function LeftSidebar() {
   return (
     <div className='z-40'>
       {/* Toggle button for mobile */}
-      <button className="ml-4 mt-4 fixed xl:hidden block p-1 pl-2 pr-2 border-2 border-gray-300 rounded-md bg-white" onClick={() => setIsOpen(!isOpen)}>
+      <button className="ml-4 mt-4 fixed p-1 pl-2 pr-2 border-2 border-gray-300 rounded-md bg-white" onClick={() => setIsOpen(!isOpen)}>
         ☰
       </button>
 
       {/* Sidebar */}
-      <div className={`fixed top-0 left-0 w-32 bg-white transition-transform duration-300 z-40 border-2 border-gray-300 rounded
+      <div className={`fixed top-16 left-0 w-32 bg-white transition-transform duration-300 z-40 border-2 border-gray-300 rounded
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           xl:translate-x-0 xl:static xl:h-auto xl:block`}>
         <nav className="flex flex-col p-4 mt-16 xl:mt-0 gap-2">

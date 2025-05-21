@@ -42,7 +42,7 @@ export default function Carousel({
   }, [autoSlide, autoSlideInterval, isAnimating]);
 
   return (
-    <div className="h-full overflow-hidden relative max-h-[600px] rounded-2xl z-10">
+    <div className="h-full w-full overflow-hidden relative rounded-2xl z-10">
       <div
         className="flex transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -53,7 +53,7 @@ export default function Carousel({
               <img
                 src={slide.image}
                 alt={`Slide ${index}`}
-                className="w-full h-full object-cover"
+                className="w-full h-68 object-cotain"
               />
             </a>
           </div>

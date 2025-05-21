@@ -9,9 +9,9 @@ function Footer() {
   return (
     <>
       {/* Footer */}
-      <div className={`bottom-0 left-0 w-full bg-white transition-transform duration-300 z-40`}>
+      <div className={`bottom-0 left-0 w-full bg-white transition-transform duration-300 z-40 mb-8`}>
         <footer className="flex flex-col p-4 lg:justify-between lg:flex-row gap-8">
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 justify-center items-center lg:items-baseline'>
             <Link to="/" className='flex gap-2 items-center justify-center'>
                 <img src={logo} alt="Logo" className="h-12 w-auto max-w-[120px] object-contain" />
                 <div className='hidden-420 font-bold text-2xl'>Book Store</div>
@@ -22,7 +22,7 @@ function Footer() {
             <div className='text-gray-500 text-md'><strong>Giờ mở cửa:</strong> 8:00 - 22:00</div>
           </div>
 
-          <div>
+          <div className='flex justify-center items-center'>
             <Map />
           </div>
 
