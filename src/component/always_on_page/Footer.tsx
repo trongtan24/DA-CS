@@ -3,7 +3,7 @@ import Map from './MapEmbeded.tsx'
 import { Link } from 'react-router-dom'
 
 function Footer() {
-  const email = "trongtan2147@gmail.com";
+  const email = "test@gmail.com";
   const phone = "0123456789";
 
   return (

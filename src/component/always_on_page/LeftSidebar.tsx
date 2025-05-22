@@ -3,6 +3,8 @@ import Modal from '../reuseable/modal.tsx'
 import { Link, useLocation } from 'react-router-dom'
 import { FaHome } from "react-icons/fa";
 import { IoIosInformationCircleOutline, IoMdMegaphone } from "react-icons/io";
+import DropDownButton from "../reuseable/dropDownButton.tsx"
+import { MdMenuBook } from 'react-icons/md';
 
 function LeftSidebar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +42,7 @@ function LeftSidebar() {
             <IoMdMegaphone />
             Thông báo
           </button>
+            <DropDownButton/>
         </nav>
       </div>
 

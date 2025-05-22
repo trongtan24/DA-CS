@@ -53,7 +53,7 @@ export default function Carousel({
               <img
                 src={slide.image}
                 alt={`Slide ${index}`}
-                className="w-full h-68 object-cotain"
+                className="w-full h-full md:h-80 object-contain md:object-fill"
               />
             </a>
           </div>

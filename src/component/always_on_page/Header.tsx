@@ -6,15 +6,14 @@ import { Link } from 'react-router-dom'
 import Modal from '../reuseable/modal'
 import LoginForm from '../pages/loginForm'
 import RegisterForm from '../pages/registerForm'
-import { MdMenuBook } from "react-icons/md";
-
-
+import { GrLogin } from "react-icons/gr"
+import { TbUserCheck } from "react-icons/tb"
 
 function Header() {
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
-  const phone = "0123456789";
+
 
   return (
     <>
@@ -50,37 +49,36 @@ function Header() {
           {/* Right side*/}
           <div className="flex gap-2">
             <button 
-              className="bg-blue-500 text-white rounded-full px-4 py-2 hidden md:block hover:bg-indigo-600 transition"
+              className="bg-blue-500 text-white rounded-full px-4 py-2 hidden md:block hover:bg-indigo-600 transition "
               onClick={() => { setIsModalOpen(true); setIsLogin(false); }}
             >
-              Đăng ký
+              <div className='flex flex-row justify-center items-center gap-2'><TbUserCheck/> Đăng ký</div>
             </button>
             <button 
               className="bg-blue-500 text-white rounded-full px-4 py-2 hover:bg-indigo-600 transition"
               onClick={() => { setIsModalOpen(true); setIsLogin(true); }}
             >
-              Đăng nhập
+              <div className='flex flex-row justify-center items-center gap-2'><GrLogin/> Đăng nhập</div>
             </button>
           </div>
         </div>
 
         {/* Bottom bar*/}
-        <div className="border-t border-gray-200 bg-white px-4 py-2 flex items-center justify-center md:justify-between xl:pl-64">
-          <button className="bg-blue-500 text-white rounded-full px-4.5 gap-1 py-2 hover:bg-indigo-600 text-nowrap flex flex-row justify-center items-center" >
-           <MdMenuBook/> Danh Mục
-          </button>
+        <div className="border-b border-gray-300 bg-white px-4 py-2 flex items-center justify-center md:justify-between xl:pl-64 z-50">
           
+          {/* Contact Info */}
+          <div className='text-gray-500 text-md gap-2 text-right md:mr-16 xl:ml-32 md:block hidden' dir="rtl">
+            <div className='text-gray-500 text-md'> </div>
+          </div>
 
           {/* Address */}
-          <div className='text-gray-500 text-md break-words line-clamp-2 md:block hidden xl:pl-32'>
+          <div className='text-gray-500 text-md break-words line-clamp-2 md:block hidden md:-pl-32'>
             <strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP. HCM
           </div>
 
-          {/* Contact Info */}
-          <div className='text-gray-500 text-md text-right xl:mr-16 xl:ml-32 md:block hidden' dir="rtl">
-            <strong>Điện thoại/Zalo:</strong>
-            <a className='underline underline-offset-4 hover:text-black ml-1' target='_blank' href={`https://zalo.me/${phone}`}>{phone}</a>
-          </div>
+          <button className="bg-blue-500 left-0 transition duration-300 z-50 -mr-2 xl:mr-12 text-white rounded-full px-4.5 gap-1 hover:bg-indigo-600 text-nowrap flex flex-row justify-center items-center" >
+
+          </button>
         </div>
       </div>
 
