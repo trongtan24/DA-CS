@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../../.flowbite-react/class-list.json";
 
 .text-ssm {
     font-size: 12px;
@@ -8,6 +10,12 @@
 @media (max-width: 580px) {
   .hidden-580 {
     display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .block-520 {
+    display: block;
   }
 }
 
@@ -23,6 +31,18 @@
   }
 }
 
+@media (max-width: 320px) {
+  .hidden-320 {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .bottom-767-css {
+    bottom: 0;
+  }
+}
+
 .ssm\:max-w-screen {
   @media (min-width: 500px) {
     max-width: 100vw;
@@ -32,5 +52,17 @@
 .ssm\:justify-between {
     @media (min-width: 420px) {
         justify-content: space-between;
+    }
+}
+
+.ssm\:gap-12 {
+    @media (min-width: 420px) {
+        gap: calc(var(--spacing) * 12)
+    }
+}
+
+.ssm\:block {
+    @media (max-width: 420px) {
+        display: none;
     }
 }

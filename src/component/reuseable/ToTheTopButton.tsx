@@ -8,7 +8,7 @@ function ToTheTopButton() {
     const toggleVisibility = () => {
       setIsVisible(window.scrollY > 500);
     };
-
+    
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
@@ -22,7 +22,7 @@ function ToTheTopButton() {
       <div className="fixed top-32 z-25">
         <button
           onClick={scrollToTop}
-          className="flex flex-col justify-center items-center bg-white text-ssm text-black p-1 rounded-lg pt-2 pb-2 border-2 border-black shadow-lg hover:opacity-100 transition duration-300 opacity-75 cursor-pointer"
+          className="flex flex-col justify-center items-center bg-white text-ssm text-black p-1 rounded-lg pt-2 pb-2 border border-black shadow-lg hover:opacity-100 transition duration-300 md:opacity-75 cursor-pointer"
         >
           <FaArrowUp/> <div className="">Lên đầu</div>
         </button>

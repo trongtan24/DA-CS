@@ -3,13 +3,13 @@ import Map from './MapEmbeded.tsx'
 import { Link } from 'react-router-dom'
 
 function Footer() {
-  const email = "trongtan2147@gmail.com";
+  const email = "test@gmail.com";
   const phone = "0123456789";
 
   return (
     <>
       {/* Footer */}
-      <div className={`bottom-0 left-0 w-full bg-white transition-transform duration-300 z-40 mb-8`}>
+      <div className={`bottom-0 left-0 w-full bg-white transition-transform duration-300 z-40 mb-40`}>
         <footer className="flex flex-col p-4 lg:justify-between lg:flex-row gap-8">
           <div className='flex flex-col gap-2 justify-center items-center lg:items-baseline'>
             <Link to="/" className='flex gap-2 items-center justify-center'>
