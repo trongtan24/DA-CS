@@ -1,6 +1,5 @@
-import logo from '/src/assets/B8K.png'
-import Map from './MapEmbeded.tsx'
 import { Link } from 'react-router-dom'
+import {SiteLogo, Map} from '../reuseable/';
 
 function Footer() {
   const email = "test@gmail.com";
@@ -12,10 +11,7 @@ function Footer() {
       <div className={`bottom-0 left-0 w-full bg-white transition-transform duration-300 z-40 mb-40`}>
         <footer className="flex flex-col p-4 lg:justify-between lg:flex-row gap-8">
           <div className='flex flex-col gap-2 justify-center items-center lg:items-baseline'>
-            <Link to="/" className='flex gap-2 items-center justify-center'>
-                <img src={logo} alt="Logo" className="h-12 w-auto max-w-[120px] object-contain" />
-                <div className='hidden-420 font-bold text-2xl'>Book Store</div>
-            </Link>
+            <SiteLogo/>
             <div className='text-gray-500 text-md'><strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP. HCM</div>
             <div className='text-gray-500 text-md'><strong>Điện thoại/Zalo:</strong> <a className='underline underline-offset-4 transition duration-300 hover:text-black ' target='_blank' href={`https://zalo.me/${phone}`}>{phone} </a></div>
             <div className='text-gray-500 text-md'><strong>Email:</strong> <a className='underline underline-offset-4 transition duration-300 hover:text-black ' target='_blank' href={`mailto:${email}`}>{email}</a></div>

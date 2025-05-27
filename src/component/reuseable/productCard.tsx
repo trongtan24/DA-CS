@@ -3,15 +3,26 @@ import { FaStar } from "react-icons/fa6";
 
 interface ProductCardProps {
     image?: string;
-    link?: string;
     price?: number;
     product?: string;
     sales?: number;
     rating?: number;
+    id?: number;
 }
 
-function productCard({ image, link, price, product, sales, rating}: ProductCardProps) {
+const normalizeProductName = (name: string) => {
+    return name
+        .toLowerCase()
+        .normalize('NFD') // chuyển tiếng việt sang chữ thường (normalize vietnamese letter)
+        .replace(/[\u0300-\u036f]/g, '') // xoá ký tự phụ (remove diacritics)
+        .replace(/[" "]/g, '_') // thay dấu cách bằng dấu _ (replace spaces with underscores)
+        .trim();
+}
+
+function productCard({ image, price, product, sales, rating, id}: ProductCardProps) {
     price = price ? price : 0;
+
+    const productLink = product ? normalizeProductName(product) : "Placeholder";
     const discountedPrice = sales ? Math.round(price * (1 - sales / 100)) : price;
     const renderStar = (rating: number) => {
         const star = [];
@@ -29,8 +40,10 @@ function productCard({ image, link, price, product, sales, rating}: ProductCardP
   return (
     <>
         <div className="flex flex-col p-2 bg-white shadow-md pb-6 rounded-xl hover:shadow-xl hover:border-gray-200 border-gray-100 border-2 hover:-translate-y-0.5 transition duration-300">
-            <Link className="relative hover:text-red-500 transition duration-300" to={link || "/"}>
-                <img src={image || "https://via.placeholder.com/150"} alt="Product" className="w-full h-48 object-contain mb-2 rounded-t-xl p-1"/>
+            <Link className="relative hover:text-red-500 transition duration-300" to={`/product/${productLink}`} state={{id}}> {/* Link to={} để chuyển sang trang, state để truyền tham số cho trang cần chuyển (check main.tsx) */}
+                <div className="w-full flex justify-center">
+                    <img src={image || "https://via.placeholder.com/150"} alt="Product" className="w-46 h-46 object-contain mb-2 rounded-t-xl p-1"/>
+                </div>
 
                 <div className="">
                      <h3 className="text-lg break-words font-semibold line-clamp-2 ">{product}</h3>

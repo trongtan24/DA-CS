@@ -33,7 +33,7 @@ function LeftSidebar({isOpen, onToggle}: LeftSidebarProps) {
   const translate = (isOpen ? 'md:translate-y-0' : 'md:-translate-y-full')
 
   return (
-    <div className='z-40'>
+    <div className='z-40 '>
       {/* Sidebar */}
       <div className={`fixed bottom-767-css md:top-16 left-0 w-32 bg-white transition-transform duration-300 z-40 border-2 border-gray-300 rounded
           ${translate}
@@ -45,9 +45,6 @@ function LeftSidebar({isOpen, onToggle}: LeftSidebarProps) {
               <IoMdMegaphone />
               Thông báo
             </button>
-          </div>
-          <div className='gap-8 hidden md:block'>
-            <DropDownMenu/>
           </div>
           <div className='gap-8'>
             <Link to="/categories" className={`${linkClass} p-2 md:hidden`}><MdMenuBook/>Danh mục</Link>

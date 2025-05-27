@@ -7,7 +7,8 @@ import Home from './component/pages/home.tsx'
 import Error404 from './component/pages/error404.tsx'
 import About from './component/pages/about.tsx'
 import ProductPage from './component/pages/productpage.tsx'
-
+import ProductDetail from './component/reuseable/productDetail.tsx'
+import Cart from './component/pages/cart.tsx'
 
 const router = createBrowserRouter([
   { 
@@ -24,10 +25,21 @@ const router = createBrowserRouter([
         element: <About/>,
       },
       {
-        path: 'productPage',
+        path: 'productPage/:name',
         element: <ProductPage/>,
+      },
+      {
+        path: 'product/:id', // product/ -> chỉ nhận tới trang product, /:(chữ bất kỳ) để các chữ phía sau đều chuyển trang được (check (productDetail) trong (reusable))
+        element: <ProductDetail/>,
+      },
+      {
+        path: 'cart',
+        element: <Cart/>
+      },
+      {
+        path: 'categories',
+        element: <Cart/>
       }
-
     ],
   },
 ])

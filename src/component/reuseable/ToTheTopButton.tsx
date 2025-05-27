@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 
-function ToTheTopButton() {
+interface ToTheTopButtonProps {
+  window_scrollY?: number;
+  top?: number;
+}
+
+function ToTheTopButton({window_scrollY = 200, top = 32}: ToTheTopButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 500);
+      setIsVisible(window.scrollY > window_scrollY);
     };
     
     window.addEventListener("scroll", toggleVisibility);
@@ -19,7 +24,7 @@ function ToTheTopButton() {
 
   return (
     isVisible && (
-      <div className="fixed top-32 z-25">
+      <div className={`${top} z-25`}>
         <button
           onClick={scrollToTop}
           className="flex flex-col justify-center items-center bg-white text-ssm text-black p-1 rounded-lg pt-2 pb-2 border border-black shadow-lg hover:opacity-100 transition duration-300 md:opacity-75 cursor-pointer"

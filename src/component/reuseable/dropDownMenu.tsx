@@ -1,6 +1,5 @@
 import { Dropdown, DropdownItem } from "flowbite-react";
 import { MdMenuBook } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 function DropdownComponent() {
     const divs = (

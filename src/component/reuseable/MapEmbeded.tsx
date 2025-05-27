@@ -1,4 +1,3 @@
-// MapEmbed.tsx
 import React from 'react';
 
 const MapEmbed: React.FC = () => {

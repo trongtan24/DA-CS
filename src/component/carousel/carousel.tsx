@@ -18,8 +18,6 @@ export default function Carousel({
   const [dragging, setDragging] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  
-
   const prev = () => {
     if (isAnimating) return;
     setIsAnimating(true);
@@ -39,7 +37,7 @@ export default function Carousel({
     return () => clearTimeout(timer);
   }, [curr]);
 
-  // auto slide effect
+  // auto slide
   useEffect(() => {
     if (!autoSlide || isPaused) return;
     const interval = setInterval(() => {
@@ -48,10 +46,12 @@ export default function Carousel({
     return () => clearInterval(interval);
   }, [autoSlide, autoSlideInterval, isAnimating, isPaused]);
 
-  // pause videos when change slide
+  // pause video
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (video) {
+        video.volume = 0.1;
+
         if (index === curr) {
           // video.play();
         } else {
