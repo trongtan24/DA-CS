@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ProductCard } from "../reuseable";
 import img2 from "/src/assets/CBook.png";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {CBook} from "../../assets/";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { ScrollToTopLink } from "../reuseable/";
 
 function cart(){
     const [quantity, setQuantity] = useState(1);
@@ -54,7 +54,7 @@ function cart(){
                                 </div>
                             </div> 
                             <div>
-                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex flex-row gap-1 items-center"> <FaRegTrashAlt/> Xoá</button>
+                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex cursor-pointer-row gap-1 items-center"> <FaRegTrashAlt/> Xoá</button>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ function cart(){
                                 </div>
                             </div> 
                             <div>
-                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex flex-row gap-1 items-center"> <FaRegTrashAlt/> Xoá</button>
+                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex flex-row gap-1 items-center cursor-pointer"> <FaRegTrashAlt/> Xoá</button>
                             </div>
                         </div>
                     </div>
@@ -106,13 +106,13 @@ function cart(){
                                 </div>
                             </div> 
                             <div>
-                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex flex-row gap-1 items-center"> <FaRegTrashAlt/> Xoá</button>
+                                <button className="text-red-400 hover:text-red-700 basis-1/3 transition duration-300 flex flex-row gap-1 items-center cursor-pointer"> <FaRegTrashAlt/> Xoá</button>
                             </div>
                         </div>
                     </div>
 
                     <div className="w-full flex flex-row items-center justify-center rounded-lg pt-4 pb-4 ">
-                        <Link to="/productPage" className="bg-blue-500 hover:bg-indigo-500 cursor-pointer text-white transition duration-300 p-2 rounded-xl">Tiếp tục mua</Link>
+                        <ScrollToTopLink to="/productpage" className="bg-blue-500 hover:bg-indigo-500 cursor-pointer text-white transition duration-300 p-2 rounded-xl">Tiếp tục mua</ScrollToTopLink>
                     </div>
 
                 </div>

@@ -1,6 +1,6 @@
 import { Dropdown, DropdownItem } from "flowbite-react";
 import { MdMenuBook } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { ScrollToTopLink } from "../reuseable"
 
 function DropdownComponent() {
     const Name = (
@@ -13,49 +13,49 @@ function DropdownComponent() {
         <DropdownItem className="px-2 bg-white hover:bg-white flex flex-col text-nowrap cursor-default rounded gap-2 justify-baseline items-baseline"> 
             <Dropdown label={<div className="p-2 bg-white hover:underline pr-11.5">Sách lập trình</div>} className="text-black bg-white hover:bg-white border-2 border-gray-300" placement="right-start"> 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ C</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ C</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ C++</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ C++</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ Java</Link> 
+                    <ScrollToTopLink to="/">Ngôn ngữ Java</ScrollToTopLink> 
                 </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ Python</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ Python</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ JavaScript</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ JavaScript</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ C#</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ C#</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Ngôn ngữ PHP</Link>
+                    <ScrollToTopLink to="/">Ngôn ngữ PHP</ScrollToTopLink>
                     </DropdownItem>
             </Dropdown>
 
             <Dropdown label={<div className="p-2 bg-white hover:bg-white hover:underline">Sách tin học cơ bản</div>} className="text-black bg-white hover:bg-white border-2 border-gray-300" placement="right-start"> 
                 <DropdownItem> 
-                    <Link to="/">Word</Link>
+                    <ScrollToTopLink to="/">Word</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Powerpoint</Link>
+                    <ScrollToTopLink to="/">Powerpoint</ScrollToTopLink>
                     </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Excel</Link> 
+                    <ScrollToTopLink to="/">Excel</ScrollToTopLink> 
                 </DropdownItem>
 
                 <DropdownItem> 
-                    <Link to="/">Project</Link>
+                    <ScrollToTopLink to="/">Project</ScrollToTopLink>
                 </DropdownItem>
             </Dropdown>
         </DropdownItem>

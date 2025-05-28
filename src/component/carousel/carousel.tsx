@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import { ScrollToTopLink } from "../reuseable";
 
 export default function Carousel({
   autoSlide = true,
@@ -8,7 +9,7 @@ export default function Carousel({
 }: {
   autoSlide?: boolean;
   autoSlideInterval?: number;
-  slides: { image: string; link: string; isVideo: boolean }[];
+  slides: { image: string; link: string; id: number; isVideo: boolean }[];
 }) {
   const [curr, setCurr] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -17,6 +18,7 @@ export default function Carousel({
   const [startX, setStartX] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  
 
   const prev = () => {
     if (isAnimating) return;
@@ -122,17 +124,17 @@ export default function Carousel({
     <button
         onClick={prev}
         disabled={isAnimating}
-        className="pointer-events-auto p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white md:block hidden cursor-pointer"
+        className="pointer-events-auto p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white cursor-pointer transform -translate-x-2"
       >
-        <FaArrowAltCircleLeft size={40} />
+        <FaArrowAltCircleLeft className="h-6 w-6 md:h-8 md:w-8" />
       </button>
 
       <button
         onClick={next}
         disabled={isAnimating}
-        className="pointer-events-auto p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white md:block hidden cursor-pointer"
+        className="pointer-events-auto p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white cursor-pointer transform translate-x-2"
       >
-        <FaArrowAltCircleRight size={40} />
+        <FaArrowAltCircleRight className="h-6 w-6 md:h-8 md:w-8" />
       </button>
   </>
   )
@@ -166,9 +168,7 @@ export default function Carousel({
             </video>
 
             ) : (
-              <a
-                href={slide.link}
-                target="_blank"
+              <ScrollToTopLink to={`/product${slide.link}`} state={{id: slide.id}}
                 rel="noopener noreferrer"
                 onClick={() => setIsPaused(false)}
               >
@@ -176,9 +176,9 @@ export default function Carousel({
                   src={slide.image}
                   alt={`Slide ${index}`}
                   className="w-full h-50 sm:h-80 object-fill"
-                  draggable={false}
+                  draggable={true}
                 />
-              </a>
+              </ScrollToTopLink>
             )}
           </div>
         ))}

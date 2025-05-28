@@ -1,16 +1,15 @@
 import Carousel from "../carousel/carousel.tsx";
-import ProductCard from "../reuseable/productCard";
-import { Link } from 'react-router-dom'
+import {ProductCard, ScrollToTopLink} from "../reuseable";
 import img2 from "/src/assets/CBook.png";
 import img3 from "/src/assets/PythonBook.jpg";
 import video1 from "/src/assets/videoplayback.mp4";
 
 function home() {
     const slides = [
-        { image: img2, link: "https://example.com/book1" , isVideo: false },
-        { image: img3, link: "https://example.com/book2" , isVideo: false },
-        { image: img2, link: "https://example.com/book3" , isVideo: false },
-        { image: video1, link: "https://example.com/book4" , isVideo: true },
+        { image: img2, link: "/test" , isVideo: false , id: 1},
+        { image: img3, link: "/tests" , isVideo: false , id: 2},
+        { image: img2, link: "/tests" , isVideo: false , id: 3},
+        { image: video1, link: "/tests" , isVideo: true , id: 4},
     ];
 
     return (
@@ -26,11 +25,11 @@ function home() {
                     <div>
                         <div className="grid gap-4 mt-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                             <ProductCard image={img2} id={1} price={100000} product="Giáo Trình Kỹ Thuật Lập Trình C Căn Bản & Nâng Cao" sales={50}/>
-                            <ProductCard image={img2} id={2} price={200000} product="Sản phẩm 2" />
+                            <ProductCard image={img3} id={2} price={200000} product="Sản phẩm 2" />
                         </div>
                     </div>
                     <div className="flex flex-row justify-center">
-                        <Link to="/productPage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</Link>
+                        <ScrollToTopLink to="/productpage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</ScrollToTopLink>
                     </div>
                 </div>
                 
@@ -46,7 +45,7 @@ function home() {
                         </div>
                     </div>
                     <div className="flex flex-row justify-center">
-                        <Link to="/productPage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</Link>
+                        <ScrollToTopLink to="/productpage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</ScrollToTopLink>
                     </div>
                 </div>
 
@@ -67,7 +66,7 @@ function home() {
                         </div>
                     </div>
                     <div className="flex flex-row justify-center">
-                        <Link to="/productPage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</Link>
+                        <ScrollToTopLink to="/productpage" className="text-center m-8 p-2 pr-8 pl-8 font-bold text-base border-2 cursor-pointer rounded-4xl text-nowrap transition hover:bg-black hover:text-white hover:border-black">Xem thêm</ScrollToTopLink>
                     </div>
                 </div>
             </div>

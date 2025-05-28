@@ -9,3 +9,4 @@ export {default as LoginForm} from './loginForm';
 export {default as RegisterForm} from './registerForm';
 export {default as Map} from './MapEmbeded';
 export {default as ProductDetail} from './productDetail';
+export {default as ScrollToTopLink} from './scrollToTopLink';

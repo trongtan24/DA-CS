@@ -20,16 +20,21 @@ interface ProductProps {
 
 function productDetail() {
   const { productId } = useParams();
-  const locationId = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const [product, setProduct] = useState<ProductProps | null>(null);
   useEffect(() => {
-    const idLoc = locationId.state.id;
-    
-    const foundProduct = products.find((p) => p.id === idLoc)
+    const idLoc = location.state?.id;
 
-    setProduct(foundProduct || null);
-  }, [productId, navigate]);
+    const idToUse = idLoc || Number(productId);
+    
+    if (idToUse) {
+      const foundProduct = products.find((p) => p.id === idToUse);
+      setProduct(foundProduct || null);
+    } else {
+      setProduct(null);
+    }
+  }, [productId, location.state, navigate]);
 
   if (!product){
     return (

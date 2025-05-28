@@ -6,7 +6,7 @@ interface ToTheTopButtonProps {
   top?: number;
 }
 
-function ToTheTopButton({window_scrollY = 200, top = 32}: ToTheTopButtonProps) {
+function ToTheTopButton({ window_scrollY = 200, top = 32 }: ToTheTopButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function ToTheTopButton({window_scrollY = 200, top = 32}: ToTheTopButtonProps) {
     
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  }, [window_scrollY]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -24,12 +24,13 @@ function ToTheTopButton({window_scrollY = 200, top = 32}: ToTheTopButtonProps) {
 
   return (
     isVisible && (
-      <div className={`${top} z-25`}>
+      <div className={`fixed right-${top} bottom-${top} z-25`}>
         <button
           onClick={scrollToTop}
-          className="flex flex-col justify-center items-center bg-white text-ssm text-black p-1 rounded-lg pt-2 pb-2 border border-black shadow-lg hover:opacity-100 transition duration-300 md:opacity-75 cursor-pointer"
+          className="flex flex-col justify-center items-center bg-white text-sm text-black p-1 rounded-lg pt-2 pb-2 border border-black shadow-lg hover:opacity-100 transition duration-300 md:opacity-75 cursor-pointer"
         >
-          <FaArrowUp/> <div className="">Lên đầu</div>
+          <FaArrowUp /> 
+          <div>Lên đầu</div>
         </button>
       </div>
     )

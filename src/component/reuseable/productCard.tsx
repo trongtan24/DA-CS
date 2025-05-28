@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { ScrollToTopLink } from "../reuseable";
 import { FaStar } from "react-icons/fa6";
 
 interface ProductCardProps {
@@ -22,7 +22,7 @@ const normalizeProductName = (name: string) => {
 function productCard({ image, price, product, sales, rating, id}: ProductCardProps) {
     price = price ? price : 0;
 
-    const productLink = product ? normalizeProductName(product) : "Placeholder";
+    const productScrollToTopLink = product ? normalizeProductName(product) : "Placeholder";
     const discountedPrice = sales ? Math.round(price * (1 - sales / 100)) : price;
     const renderStar = (rating: number) => {
         const star = [];
@@ -40,7 +40,8 @@ function productCard({ image, price, product, sales, rating, id}: ProductCardPro
   return (
     <>
         <div className="flex flex-col p-2 bg-white shadow-md pb-6 rounded-xl hover:shadow-xl hover:border-gray-200 border-gray-100 border-2 hover:-translate-y-0.5 transition duration-300">
-            <Link className="relative hover:text-red-500 transition duration-300" to={`/product/${productLink}`} state={{id}}> {/* Link to={} để chuyển sang trang, state để truyền tham số cho trang cần chuyển (check main.tsx) */}
+            <ScrollToTopLink className="relative hover:text-red-500 transition duration-300"
+             to={`/product/${productScrollToTopLink}`} state={{id}}> {/* ScrollToTopLink to={} để chuyển sang trang, state để truyền tham số cho trang cần chuyển (check main.tsx) */}
                 <div className="w-full flex justify-center">
                     <img src={image || "https://via.placeholder.com/150"} alt="Product" className="w-46 h-46 object-contain mb-2 rounded-t-xl p-1"/>
                 </div>
@@ -53,7 +54,7 @@ function productCard({ image, price, product, sales, rating, id}: ProductCardPro
                         Giảm {sales}%
                     </div>)}
                 </div>
-            </Link>
+            </ScrollToTopLink>
             <div className="">
                 {sales && sales > 0 ? (
                     <div className="flex flex-col sm:flex-row gap-2">
