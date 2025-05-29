@@ -30,7 +30,7 @@ function Footer() {
           </div>
         </footer>
       </div>
-      <footer className="text-center text-sm text-gray-500 border-t pt-4 mb-20">
+      <footer className="text-center text-sm text-gray-500 pt-4 mb-20 md:mb-0">
           © 2025 B8K
         </footer>
     </>

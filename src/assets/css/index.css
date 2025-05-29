@@ -64,3 +64,22 @@
         display: none;
     }
 }
+
+@keyframes gradientDown {
+  0% {
+    background-position: 100%;
+  }
+  50% {
+    background-position: 50%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(to top, red, red, red,red, red, yellow, red, red, red, red,red);
+  background-size: 50% 50%;
+  animation: gradientDown 3s linear infinite;
+}
+

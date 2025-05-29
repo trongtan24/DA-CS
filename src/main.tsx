@@ -9,6 +9,7 @@ import About from './component/pages/about.tsx'
 import ProductPage from './component/pages/productpage.tsx'
 import ProductDetail from './component/reuseable/productDetail.tsx'
 import Cart from './component/pages/cart.tsx'
+import Category from './component/pages/categories.tsx'
 
 const router = createBrowserRouter([
   { 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home/>,
+      },
+      {
+        path: '/testpage',
+        element: <></>
       },
       {
         path: 'about',
@@ -42,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'categories',
-        element: <Cart/>
+        element: <Category/>
       }
     ],
   },

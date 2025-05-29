@@ -9,7 +9,7 @@ export default function Carousel({
 }: {
   autoSlide?: boolean;
   autoSlideInterval?: number;
-  slides: { image: string; link: string; id: number; isVideo: boolean }[];
+  slides: { image: string; link: string; id: number; isVideo: boolean ; name?: string}[];
 }) {
   const [curr, setCurr] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -140,7 +140,7 @@ export default function Carousel({
   )
 
   return (
-    <div className="h-full w-full lg:w-1/2 overflow-hidden relative rounded-2xl z-10 select-none">
+    <div className="h-full w-full lg:w-2/3 overflow-hidden relative rounded-2xl z-10 select-none">
       <div
         className="flex transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -168,7 +168,7 @@ export default function Carousel({
             </video>
 
             ) : (
-              <ScrollToTopLink to={`/product${slide.link}`} state={{id: slide.id}}
+              <ScrollToTopLink to={`/product${slide.link}`} state={{id: slide.id, name: slide.name}}
                 rel="noopener noreferrer"
                 onClick={() => setIsPaused(false)}
               >

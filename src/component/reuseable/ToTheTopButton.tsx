@@ -24,10 +24,10 @@ function ToTheTopButton({ window_scrollY = 200, top = 32 }: ToTheTopButtonProps)
 
   return (
     isVisible && (
-      <div className={`fixed right-${top} bottom-${top} z-25`}>
+      <div className={`bottom-${top} z-25 text-nowrap`}>
         <button
           onClick={scrollToTop}
-          className="flex flex-col justify-center items-center bg-white text-sm text-black p-1 rounded-lg pt-2 pb-2 border border-black shadow-lg hover:opacity-100 transition duration-300 md:opacity-75 cursor-pointer"
+          className="flex flex-col text-ssm justify-center items-center bg-white text-black p-1 rounded-lg pt-2 pb-2 border border-gray-500 shadow-lg hover:opacity-100 hover:border-gray-700 transition duration-300 md:opacity-60 cursor-pointer"
         >
           <FaArrowUp /> 
           <div>Lên đầu</div>

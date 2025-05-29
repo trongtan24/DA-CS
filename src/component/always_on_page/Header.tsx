@@ -47,8 +47,8 @@ function Header({ onToggleSidebar}: HeaderProps) {
           <div className='hidden md:block'></div>
 
           {/* Left side*/}
-          <div className='xl:translate-x-[15%] transform translate-none'>
-            <SiteLogo/>
+          <div className='lg:translate-x-[20%] transform translate-none'>
+            <SiteLogo/> 
           </div>
           {/* Search bar hidden until md */}
           <div className='w-max flex-1 mx-4 hidden-520 block md:hidden'>
@@ -89,9 +89,9 @@ function Header({ onToggleSidebar}: HeaderProps) {
           </button>
           <div className='hidden lg:block'><LeftSidebar isBlock={true}/></div>
           {/* Address */}
-          <div className='text-gray-500 text-md break-words line-clamp-2 md:block hidden ml-60 lg:ml-0 md:-pl-32'>
+          {/* <div className='text-gray-500 text-md break-words line-clamp-2 md:block hidden ml-60 lg:ml-0'>
             <strong >Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP. HCM
-          </div>
+          </div> */}
 
           <div className='w-full sm:max-w-[280px] md:w-max ml-1 mr-10 md:mx-4 block-520 hidden md:block'>
             {combineSearchBar}
