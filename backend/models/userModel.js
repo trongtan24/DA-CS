@@ -1,4 +1,3 @@
-import _default from "concurrently";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
