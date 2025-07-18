@@ -261,17 +261,17 @@ const Header = () => {
                         </ScrollToTop>
                       </li>
                       <hr />
-                      <ScrollToTop className="p-1" to="/profile">
+                      <ScrollToTop className="p-1 hover:!text-secondary transition duration-200" to="/profile">
                         Thông tin
                       </ScrollToTop>
-                      <ScrollToTop className="p-1" to="/orders">
+                      <ScrollToTop className="p-1 hover:!text-secondary transition duration-200" to="/orders">
                         Đơn hàng
                       </ScrollToTop>
                       {/* <ScrollToTop className="p-1" to="/settings">
                         Cài đặt
                       </ScrollToTop> */}
                       <hr />
-                      <li onClick={logout} className="cursor-pointer p-1">
+                      <li onClick={logout} className="cursor-pointer p-1  hover:!text-red-500 transition">
                         Đăng xuất
                       </li>
                     </ul>

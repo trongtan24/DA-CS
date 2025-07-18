@@ -124,7 +124,12 @@ const Orders = ({ token }) => {
             <div className="max-h-[60vh] overflow-y-auto">
               {Array.isArray(searchOrders) &&
                 searchOrders.map((order) => (
-                  <div key={order._id} className="py-2 border-t border-gray-200 hover:bg-gray-100 ">
+                  <div
+                    key={order._id}
+                    className={`py-2 border-t border-gray-200 hover:bg-gray-100 ${
+                      order.status === "Huỷ" ? "!bg-red-200/70" : ""
+                    }`}
+                  >
                     <p className="pb-4 pl-2">
                       <span className="!text-black">orderId:</span> #{order._id}
                     </p>
@@ -246,6 +251,9 @@ const Orders = ({ token }) => {
                         <option value="Đóng gói">Đóng gói</option>
                         <option value="Đang giao">Đang giao</option>
                         <option value="Đã hoàn tất">Đã hoàn tất</option>
+                        <option hidden={true} value="Huỷ">
+                          Huỷ
+                        </option>
                       </select>
                     </div>
                   </div>

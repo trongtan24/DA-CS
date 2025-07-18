@@ -10,7 +10,8 @@ import { ScrollToTopNav, Titles } from "../components";
 import { NavLink, useParams } from "react-router-dom";
 
 const GuestOrders = () => {
-  const { backendUrl, navigate, toggleLogin, getProducts } = useContext(ShopContext);
+  const { backendUrl, navigate, toggleLogin, getProducts } =
+    useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
   const [order, setOrder] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,9 +62,7 @@ const GuestOrders = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        await getProducts();
-        setOrder([]);
-        setOrderData([]);
+        await loadOrderData();
       } else {
         toast.error(res.data.message);
       }
@@ -162,7 +161,10 @@ const GuestOrders = () => {
           </div>
         ) : (
           order.map((orderItem) => (
-            <div key={orderItem._id} className="bg-white border border-gray-300 rounded-lg p-4 mt-8">
+            <div
+              key={orderItem._id}
+              className="bg-white border border-gray-300 rounded-lg p-4 mt-8"
+            >
               <div className="flexBetween mb-2">
                 <p className="text-sm text-gray-700">
                   <strong>Đơn hàng:</strong> #{orderItem._id}
@@ -217,7 +219,11 @@ const GuestOrders = () => {
                   </p>
                   <p className="text-gray-700">
                     <strong className="text-black">Thanh toán:</strong>{" "}
-                    {orderItem.payment ? "Đã thanh toán" : "Chưa thanh toán"}
+                    {orderItem.payment ? (
+                      <span className="text-green-600">Đã thanh toán</span>
+                    ) : (
+                      <span className="text-red-600">Chưa thanh toán</span>
+                    )}
                   </p>
                   <p className="text-gray-700">
                     <strong className="text-black">Phương thức:</strong>{" "}
@@ -229,22 +235,41 @@ const GuestOrders = () => {
                   </p>
                 </div>
 
-                <button
-                  className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
-                    (new Date() > new Date(orderItem.expired_date) || orderItem.status === "Huỷ")
-                      ? "!hidden"
-                      : ""
-                  }`}
-                  onClick={() => {
-                    if (
-                      confirm("Bạn có chắc chắn muốn xoá đơn hàng này không?")
-                    ) {
-                      deleteOrder(token);
-                    }
-                  }}
-                >
-                  Huỷ <TbTrash />
-                </button>
+                <div className="flex gap-4">
+                  {/* <button
+                    className={`flexCenter gap-1 cursor-pointer hover:text-blue-500 transition-all ${
+                      !(
+                        orderItem.paymentMethod === "MOMO" &&
+                        !orderItem.payment &&
+                        orderItem.status !== "Huỷ"
+                      )
+                        ? "!hidden"
+                        : ""
+                    }`}
+                    onClick={() => {}}
+                  >
+                    Thanh toán lại <IoMdRefresh />
+                  </button> */}
+                  <button
+                    className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
+                      new Date() > new Date(orderItem.expired_date) ||
+                      orderItem.status === "Huỷ" ||
+                      orderItem.status === "Đã hoàn tất" ||
+                      orderItem.status === "Đang giao"
+                        ? "!hidden"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (
+                        confirm("Bạn có chắc chắn muốn huỷ đơn hàng này không?")
+                      ) {
+                        deleteOrder(token);
+                      }
+                    }}
+                  >
+                    Huỷ <TbTrash />
+                  </button>
+                </div>
               </div>
             </div>
           ))

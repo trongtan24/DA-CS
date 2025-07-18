@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { TbTrash } from "react-icons/tb";
 import { toast } from "react-toastify";
+import { IoMdRefresh } from "react-icons/io";
 import { Titles } from "../components";
 
 const Orders = () => {
@@ -13,7 +14,8 @@ const Orders = () => {
     useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
   const [order, setOrder] = useState([]);
-  const [orderNew, setOrderNew] = useState([]);
+  const [orderOld, setOrderOld] = useState([]);
+  const [orderCancel, setOrderCancel] = useState([]);
   const [state, setState] = useState("new");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,9 +41,15 @@ const Orders = () => {
           });
           allOrders.push(order);
         });
-        setOrderData(allOrders);
-        setOrder(allOrders);
-        setOrderNew([...allOrders].reverse());
+        setOrderData(allOrders.filter((o) => o.status !== "Huỷ").reverse());
+        setOrder(allOrders.filter((o) => o.status !== "Huỷ").reverse());
+        setOrderOld(
+          [...allOrders]
+            .reverse()
+            .filter((o) => o.status !== "Huỷ")
+            .reverse()
+        );
+        setOrderCancel(allOrders.filter((o) => o.status === "Huỷ").reverse());
       }
     } catch (error) {
       console.log(error);
@@ -65,12 +73,34 @@ const Orders = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        // update UI
-        await getProducts();
-        setOrder((prev) => prev.filter((o) => o._id !== orderId));
-        setOrderData((prev) => prev.filter((item) => item.orderId !== orderId));
+        await loadOrderData();
       } else {
         toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyOrderPayment = async (orderId, amount) => {
+    setIsLoading(true);
+    try {
+      if (!token) {
+        return null;
+      }
+      const res = await axios.post(backendUrl + "/api/order/momostatus", {
+        orderId,
+        amount,
+      });
+      if (res.data.success) {
+        toast.success(res.data.momoRes);
+        await loadOrderData();
+      } else {
+        toast.error(res.data.momoRes);
+        console.log(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -85,29 +115,23 @@ const Orders = () => {
   }, [token]);
 
   useEffect(() => {
+    let filter;
     if (state === "new") {
-      setOrderData(orderNew);
+      filter = order;
     } else if (state === "old") {
-      setOrderData(order);
+      filter = orderOld;
     } else if (state === "completed") {
-      const filtered = order.filter((o) => o.status === "Đã hoàn tất");
-      setOrderData(filtered);
+      filter = order.filter((o) => o.status === "Đã hoàn tất");
     } else if (state === "incomplete") {
-      const filtered = order.filter((o) => o.status !== "Đã hoàn tất");
-      setOrderData(filtered);
+      filter = order.filter((o) => o.status !== "Đã hoàn tất");
     } else if (state === "payed") {
-      const filtered = order.filter((o) => o.payment === true);
-      setOrderData(filtered);
+      filter = order.filter((o) => o.payment === true);
     } else if (state === "notpay") {
-      const filtered = order.filter((o) => o.payment === false);
-      setOrderData(filtered);
-    } else if (state === "notcancel") {
-      const filtered = order.filter((o) => o.status !== "Huỷ");
-      setOrderData(filtered);
+      filter = order.filter((o) => o.payment === false);
     } else if (state === "cancel") {
-      const filtered = order.filter((o) => o.status === "Huỷ");
-      setOrderData(filtered);
+      filter = orderCancel;
     }
+    setOrderData(filter);
   }, [order, state]);
 
   if (isLoading) {
@@ -184,7 +208,6 @@ const Orders = () => {
             <option value="incomplete">Chưa hoàn thành</option>
             <option value="payed">Thanh toán</option>
             <option value="notpay">Chưa thanh toán</option>
-            <option value="notcancel">Còn tồn tại</option>
             <option value="cancel">Đã huỷ</option>
           </select>
           <button
@@ -196,12 +219,21 @@ const Orders = () => {
         </div>
         {orderData.length === 0 ? (
           <div className="flexCenter flex-col mt-8 gap-6 py-24">
-            <h3 className="bold-24">Bạn chưa có đơn hàng nào</h3>
+            <h3 className="bold-24">Không tìm thấy đơn hàng</h3>
             <p className="text-gray-500">
-              Hãy mua sắm ngay để có những trải nghiệm tuyệt vời!
+              {state === "notcancel" && "Bạn chưa có đơn hàng nào còn tồn tại."}
+              {state === "new" && "Bạn chưa có đơn hàng mới."}
+              {state === "old" && "Bạn chưa có đơn hàng cũ."}
+              {state === "completed" && "Bạn chưa có đơn hàng hoàn thành nào."}
+              {state === "incomplete" &&
+                "Bạn chưa có đơn hàng chưa hoàn thành nào."}
+              {state === "payed" && "Bạn chưa có đơn hàng đã thanh toán nào."}
+              {state === "notpay" &&
+                "Bạn chưa có đơn hàng chưa thanh toán nào."}
+              {state === "cancel" && "Bạn chưa huỷ đơn hàng nào."}
             </p>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/shop")}
               className="btn-secondaryToOne !px-4 !py-2 text-sm"
               style={{ width: "fit-content" }}
             >
@@ -260,6 +292,8 @@ const Orders = () => {
                           ? "text-yellow-600"
                           : orderItem.status === "Đã hoàn tất"
                           ? "text-green-600"
+                          : orderItem.status === "Huỷ"
+                          ? "text-red-600"
                           : "text-gray-600"
                       }`}
                     >
@@ -268,7 +302,11 @@ const Orders = () => {
                   </p>
                   <p className="text-gray-700">
                     <strong className="text-black">Thanh toán:</strong>{" "}
-                    {orderItem.payment ? "Đã thanh toán" : "Chưa thanh toán"}
+                    {orderItem.payment ? (
+                      <span className="text-green-600">Đã thanh toán</span>
+                    ) : (
+                      <span className="text-red-600">Chưa thanh toán</span>
+                    )}
                   </p>
                   <p className="text-gray-700">
                     <strong className="text-black">Phương thức:</strong>{" "}
@@ -280,23 +318,41 @@ const Orders = () => {
                   </p>
                 </div>
 
-                <button
-                  className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
-                    new Date() > new Date(orderItem.expired_date) ||
-                    orderItem.status === "Huỷ"
-                      ? "!hidden"
-                      : ""
-                  }`}
-                  onClick={() => {
-                    if (
-                      confirm("Bạn có chắc chắn muốn xoá đơn hàng này không?")
-                    ) {
-                      deleteOrder(orderItem._id);
-                    }
-                  }}
-                >
-                  Huỷ <TbTrash />
-                </button>
+                <div className="flex gap-4">
+                  {/* <button
+                    className={`flexCenter gap-1 cursor-pointer hover:text-blue-500 transition-all ${
+                      !(
+                        orderItem.paymentMethod === "MOMO" &&
+                        !orderItem.payment &&
+                        orderItem.status !== "Huỷ"
+                      )
+                        ? "!hidden"
+                        : ""
+                    }`}
+                    onClick={() => {verifyOrderPayment(orderItem._id, orderItem.amount)}}
+                  >
+                    Thanh toán lại <IoMdRefresh />
+                  </button> */}
+                  <button
+                    className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
+                      new Date() > new Date(orderItem.expired_date) ||
+                      orderItem.status === "Huỷ" ||
+                      orderItem.status === "Đã hoàn tất" ||
+                      orderItem.status === "Đang giao"
+                        ? "!hidden"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (
+                        confirm("Bạn có chắc chắn muốn huỷ đơn hàng này không?")
+                      ) {
+                        deleteOrder(orderItem._id);
+                      }
+                    }}
+                  >
+                    Huỷ <TbTrash />
+                  </button>
+                </div>
               </div>
             </div>
           ))

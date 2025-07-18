@@ -196,7 +196,7 @@ const placeOrderCOD = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
     });
 
@@ -443,7 +443,7 @@ const momoCallBack = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     } else {
@@ -464,7 +464,7 @@ const momoStatus = async (req, res) => {
   // dùng từ verifymomo tạm bợ :))
   try {
     const { orderId, amount } = req.body;
-
+    
     const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
     const signature = crypto
       .createHmac("sha256", secretKey)
@@ -490,7 +490,7 @@ const momoStatus = async (req, res) => {
 
     const response = await axios(option);
     const momoRes = response.data;
-
+    console.log(momoRes)
     if (momoRes.resultCode === 0 && momoRes.orderId) {
       await orderModel.findOneAndUpdate(
         { momoOrderId: momoRes.orderId },
@@ -513,7 +513,7 @@ const momoStatus = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     }
@@ -558,7 +558,6 @@ const updateStatus = async (req, res) => {
     } else {
       await orderModel.findByIdAndUpdate(orderId, {
         status,
-        payment: true,
         updated_date: Date.now(),
       });
     }
@@ -579,12 +578,29 @@ const userDeleteOrders = async (req, res) => {
       return res.json({ success: false, message: "Không tìm thấy đơn hàng!" });
     }
 
-    const deleteTimer = 1;
+    if (order.status === "Huỷ") {
+      return res.json({ success: false, message: "Đơn hàng đã bị huỷ!" });
+    }
+
+    if (order.status === "Đã hoàn tất") {
+      return res.json({
+        success: false,
+        message: "Đơn hàng đã hoàn tất, không thể huỷ!",
+      });
+    }
+
+    if (order.status === "Đang giao") {
+      return res.json({
+        success: false,
+        message: "Đơn hàng đang được giao, không thể huỷ!",
+      });
+    }
+
     const now = new Date();
     if (now > order.expired_date) {
       return res.json({
         success: false,
-        message: `Bạn chỉ có thể xoá đơn hàng trong vòng ${deleteTimer} tiếng sau khi đặt.`,
+        message: `Bạn chỉ có thể huỷ đơn hàng trong vòng ${timer(cancelTimer)}`,
       });
     }
 
@@ -607,7 +623,7 @@ const userDeleteOrders = async (req, res) => {
     }
     order.status = "Huỷ";
     await order.save();
-    res.json({ success: true, message: "Xoá thành công!" });
+    res.json({ success: true, message: "Huỷ thành công!" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -786,7 +802,7 @@ const placeOrderGuestCOD = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
     });
     const redirectUrl = `/guestorder/${token}`;
@@ -1037,7 +1053,7 @@ const momoCallBackGuest = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     } else {
@@ -1112,7 +1128,7 @@ const momoStatusGuest = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
+    <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     }
@@ -1142,7 +1158,6 @@ const updateGuestStatus = async (req, res) => {
     } else {
       await guestOrderModel.findByIdAndUpdate(orderId, {
         status,
-        payment: true,
         updated_date: Date.now(),
       });
     }
@@ -1182,11 +1197,29 @@ const guestDeleteOrder = async (req, res) => {
       return res.json({ success: false, message: "Không tìm thấy đơn hàng!" });
     }
 
+    if (order.status === "Huỷ") {
+      return res.json({ success: false, message: "Đơn hàng đã bị huỷ!" });
+    }
+
+    if (order.status === "Đã hoàn tất") {
+      return res.json({
+        success: false,
+        message: "Đơn hàng đã hoàn tất, không thể huỷ!",
+      });
+    }
+
+    if (order.status === "Đang giao") {
+      return res.json({
+        success: false,
+        message: "Đơn hàng đang được giao, không thể huỷ!",
+      });
+    }
+
     const now = new Date();
     if (now > order.expired_date) {
       return res.json({
         success: false,
-        message: `Bạn chỉ có thể xoá đơn hàng trong vòng ${timer(cancelTimer)}`,
+        message: `Bạn chỉ có thể huỷ đơn hàng trong vòng ${timer(cancelTimer)}`,
       });
     }
 
@@ -1211,7 +1244,7 @@ const guestDeleteOrder = async (req, res) => {
     order.status = "Huỷ";
 
     await order.save();
-    res.json({ success: true, message: "Xoá thành công!" });
+    res.json({ success: true, message: "Huỷ thành công!" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
