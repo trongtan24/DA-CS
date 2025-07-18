@@ -540,7 +540,7 @@ const PlaceOrder = () => {
               <h3 className="bold-20 mb-5 text-center">
                 Phương thức thanh toán
               </h3>
-              <div className="flexCenter gap-12">
+              <div className="flex items-center flex-col s:flex-row s:flexCenter gap-6 s:gap-12">
                 <div
                   onClick={() => setMethod("momo")}
                   className={`${

@@ -34,7 +34,7 @@ function ScrollToTopBtn() {
   return isVisible ? (
     <button
       onClick={handleClick}
-      className="fixed bottom-8 right-8 w-10 h-10 flexCenter bg-white text-secondary ring-1 ring-slate-900/10 rounded-full hover:bg-[#dadadd] transition duration-200 z-50"
+      className="fixed bottom-[70px] right-6 w-10 h-10 flexCenter bg-white text-secondary ring-1 ring-slate-900/10 rounded-full hover:bg-[#dadadd] transition duration-200 z-50"
     >
       <FaChevronUp />
     </button>

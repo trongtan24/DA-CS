@@ -72,11 +72,11 @@ const BookSlides = ({
 
   return (
     <section className="py-4 pt-8 bg-white rounded-xl">
-      <div className="mt-2 flexBetween flex-wrap gap-4">
+      <div className="mt-2 my-8 s:flexBetween flex-wrap gap-4">
         <Titles
           title1={title}
           title2={""}
-          titleStyle1={"pb-8"}
+          titleStyle1={""}
           titleStyle2={""}
           paraStyle={"!block"}
         />

@@ -131,7 +131,7 @@ const GuestOrders = () => {
   return (
     <section className="max-padd-container pt-8 pb-32 bg-primary rounded-xl">
       <div className="pb-12">
-        <div className="flexBetween bg-white rounded-xl p-6 border border-gray-300">
+        <div className="flex flex-col items-center gap-4 s:flexBetween s:flex-row bg-white rounded-xl p-6 border border-gray-300">
           <Titles
             title1={"Đơn hàng"}
             title2={""}
@@ -165,7 +165,7 @@ const GuestOrders = () => {
               key={orderItem._id}
               className="bg-white border border-gray-300 rounded-lg p-4 mt-8"
             >
-              <div className="flexBetween mb-2">
+              <div className="hidden sm:flexBetween mb-2">
                 <p className="text-sm text-gray-700">
                   <strong>Đơn hàng:</strong> #{orderItem._id}
                 </p>
@@ -178,7 +178,7 @@ const GuestOrders = () => {
               {orderItem.items.map((item, i) => (
                 <div
                   key={i}
-                  className="flex gap-4 items-start border-t border-gray-300 py-4"
+                  className="flex gap-4 items-start sm:border-t border-gray-300 py-4"
                 >
                   <img
                     src={item.image}

@@ -265,7 +265,7 @@ const Profile = () => {
           />
 
           {/* timeline */}
-          <div className="flex flex-wrap justify-center gap-4 bg-white rounded-xl">
+          <div className="hidden xs:flex flex-wrap justify-center gap-4 bg-white rounded-xl">
             {userInfo?.created_date && (
               <div className="flex items-center bg-gray-10 border border-gray-300 px-4 py-2 rounded-full text-sm">
                 <FiCalendar className="mr-2 " />
@@ -275,7 +275,7 @@ const Profile = () => {
                 </span>
               </div>
             )}
-            {userInfo?.login_date && (
+            {/* {userInfo?.login_date && (
               <div className="flex items-center bg-gray-10 border border-gray-300 px-4 py-2 rounded-full text-sm">
                 <FiClock className="mr-2 " />
                 <span>
@@ -283,12 +283,12 @@ const Profile = () => {
                   {new Date(userInfo.login_date).toLocaleString()}
                 </span>
               </div>
-            )}
+            )} */}
             {userInfo?.updated_date && (
               <div className="flex items-center bg-gray-10 border border-gray-300 px-4 py-2 rounded-full text-sm">
                 <FiEdit className="mr-2 " />
                 <span>
-                  Cập nhật lần cuối:{" "}
+                  Cập nhật vào:{" "}
                   {new Date(userInfo.updated_date).toLocaleDateString()}
                 </span>
               </div>

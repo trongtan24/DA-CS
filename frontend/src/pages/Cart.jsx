@@ -14,6 +14,8 @@ const Cart = () => {
     getCartTotalPrice,
     getCartCount,
     getUniqueCartCount,
+    deliveryCharges,
+    VAT,
   } = useContext(ShopContext);
 
   const discounted = (original, discount = 0) => {
@@ -22,9 +24,14 @@ const Cart = () => {
     return Math.round(rawPrice / 100) * 100;
   };
 
+  const subTotal = getCartTotalPrice();
+  const vatAmount = (subTotal + deliveryCharges) * VAT;
+  const AfterVAT =
+    Math.round((subTotal + deliveryCharges + vatAmount) / 100) * 100;
+
   return (
     <section className="max-padd-container pt-8 pb-32 bg-primary rounded-xl">
-      <div className="">
+      <div>
         <div className="flexBetween bg-white rounded-xl p-6 border border-gray-300">
           <Titles
             title1={"Giỏ hàng"}
@@ -44,35 +51,31 @@ const Cart = () => {
               <button
                 onClick={() => navigate("/")}
                 className="btn-secondaryToOne !px-4 !py-2 text-sm"
-                style={{ width: "fit-content" }}
               >
                 Mua sắm ngay
               </button>
             </div>
           ) : (
             <div className="bg-white border border-gray-300 rounded-lg p-4 mt-8">
-              <div className="grid grid-cols-12 gap-x-3 pb-4 border-b border-gray-200">
-                <div className="col-span-6 h3 line-clamp-1">Sản phẩm</div>
-                <div className="col-span-3 flex justify-center h3 line-clamp-1">
-                  Số lượng
-                </div>
-                <div className="col-span-2 flex justify-center h3 line-clamp-1">
-                  Thành tiền
-                </div>
-                <div className="col-span-1 flex justify-end h3 line-clamp-1">
-                  Xoá
-                </div>
+              {/* Table Header */}
+              <div className="hidden sm:flex justify-between text-sm font-semibold border-b pb-2 text-gray-700">
+                <div className="w-2/5 text-[20px]">Sản phẩm</div>
+                <div className="w-1/5 text-[20px] text-center">Số lượng</div>
+                <div className="w-1/5 text-[20px] text-center">Thành tiền</div>
+                <div className="w-1/10 text-[20px] text-end">Xoá</div>
               </div>
 
-              <div className="divide-y divide-gray-100">
+              {/* Table Rows */}
+              <div className="divide-y divide-gray-300">
                 {books.map((book) => {
                   if (cartItems[book._id] > 0) {
                     return (
                       <div
                         key={book._id}
-                        className="grid grid-cols-12 gap-x-3 py-4"
+                        className="flex flex-col sm:flex-row justify-between items-center gap-4 py-4"
                       >
-                        <div className="col-span-6 flex gap-4">
+                        {/* Product Info */}
+                        <div className="flexCenter flex-col sm:justify-start sm:items-start sm:flex-row sm:w-2/5 gap-4">
                           <img
                             src={book.image}
                             alt={book.name}
@@ -83,11 +86,11 @@ const Cart = () => {
                               <h5 className="h5 !my-0 line-clamp-2">
                                 {book.name}
                               </h5>
-                              <p className="text-sm text-gray-500 mb-1.5">
+                              <p className="flexCenter sm:justify-start sm:items-start text-sm text-gray-500 mb-1.5">
                                 {book.category}
                               </p>
                             </div>
-                            <h4 className="">
+                            <h4 className="flexCenter sm:justify-start sm:items-start">
                               {discounted(
                                 book.price,
                                 book.discount
@@ -97,8 +100,9 @@ const Cart = () => {
                           </div>
                         </div>
 
-                        <div className="col-span-3 flex items-center justify-center">
-                          <div className="flex items-center ring-1 ring-slate-900/5 rounded-full overflow-hidden bg-primary">
+                        {/* Quantity */}
+                        <div className="sm:w-1/5 flexCenter">
+                          <div className="flex items-center ring-1 ring-slate-900/5 rounded-full bg-primary overflow-hidden">
                             <button
                               onClick={() =>
                                 cartItems[book._id] > 1
@@ -126,7 +130,8 @@ const Cart = () => {
                           </div>
                         </div>
 
-                        <div className="col-span-2 flex items-center justify-center text-lg font-medium">
+                        {/* Total Price */}
+                        <div className="sm:w-1/5 text-center text-lg font-medium flexCenter">
                           {(
                             discounted(book.price, book.discount) *
                             cartItems[book._id]
@@ -134,11 +139,13 @@ const Cart = () => {
                           đ
                         </div>
 
-                        <div className="col-span-1 flex items-center justify-end">
+                        {/* Remove Button */}
+                        <div className="flexCenter sm:w-1/10 text-end">
                           <button
                             onClick={() => updateAmount(book._id, 0)}
-                            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                            className="flexCenter gap-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
                           >
+                            <div className="sm:hidden">Xoá</div>{" "}
                             <TbTrash className="text-xl text-gray-500 hover:text-red-500 transition-colors" />
                           </button>
                         </div>
@@ -149,19 +156,36 @@ const Cart = () => {
                 })}
               </div>
 
+              {/* Total */}
               <div className="flex justify-center items-center mt-20">
                 <div className="w-full flex flex-col items-center">
                   <CartTotal />
                   <ScrollToTop
                     to={"/place-order"}
-                    className="btn-secondaryOne mt-7 !px-8 s:!px-16"
+                    className="btn-secondaryOne mt-7 !px-2 xs:!px-8 s:!px-16 text-nowrap"
                   >
-                    Đặt hàng
+                    Thanh toán
                   </ScrollToTop>
                 </div>
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="fixed items-center sm:hidden p-1 bottom-0 left-0 right-0 bg-white h-12 z-50 border border-t-gray-300">
+        <div className="flexBetween">
+          <div className="flex font-bold gap-2">
+            <div className="hidden 3xs:flex">Tổng: </div> {AfterVAT.toLocaleString()}đ
+          </div>
+          <div className="flex">
+            <ScrollToTop
+              to={"/place-order"}
+              className="btn-secondaryOne !px-2 xs:!px-8 s:!px-16 text-nowrap"
+            >
+              Thanh toán
+            </ScrollToTop>
+          </div>
         </div>
       </div>
     </section>

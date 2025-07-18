@@ -30,19 +30,19 @@ const CartTotal = () => {
       </div>
 
       <div className="space-y-3">
-        <div className="flexBetween">
+        <div className="flex flex-col s:flex-row s:flexBetween">
           <span className="text-gray-600">Tổng giá sản phẩm:</span>
           <span className="font-medium">{subTotal.toLocaleString()}đ</span>
         </div>
 
-        <div className="flexBetween">
+        <div className="flex flex-col s:flex-row s:flexBetween">
           <span className="text-gray-600">Phí vận chuyển:</span>
           <span className="font-medium">
             {subTotal === 0 ? "0" : `${deliveryCharges.toLocaleString()}đ`}
           </span>
         </div>
 
-        <div className="flexBetween">
+        <div className="flex flex-col s:flex-row s:flexBetween">
           <span className="text-gray-600">VAT:</span>
           <span className="font-medium">
             {subTotal === 0 ? "0" : `${(VAT * 100).toLocaleString()}%`}
@@ -51,7 +51,7 @@ const CartTotal = () => {
 
         <div className="border-t border-gray-300 my-3"></div>
 
-        <div className="flexBetween">
+        <div className="flex flex-col s:flex-row s:flexBetween">
           <span className="text-lg font-bold">Tổng (Sau VAT):</span>
           <span className="text-lg font-bold">
             {subTotal === 0 ? "0" : AfterVAT.toLocaleString()}đ
