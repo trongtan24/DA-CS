@@ -12,7 +12,7 @@ const Login = ({ setToken }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    window.location.href = "http://localhost:5000/";
+    window.location.href = process.env.VITE_FRONTEND_URL;
   };
 
   const onSubmitHandler = async (e) => {
