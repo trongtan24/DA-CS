@@ -31,7 +31,7 @@ import { useContext } from "react";
 const App = () => {
   return (
     <>
-      <ToastContainer draggable={true} autoClose={2000} />
+      <ToastContainer draggable={true} autoClose={2000} closeOnClick={true} toastClassName={"custom-toast-container"}/>
       <Header />
       <div className="h-[126px] bg-white max-padd-container"></div>
 

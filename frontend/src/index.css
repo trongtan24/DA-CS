@@ -53,6 +53,10 @@
   --swiper-navigation-size: 30px;
 }
 
+.custom-toast-container {
+  top: 126px !important;
+}
+
 @layer base {
   .h1 {
     @apply text-[45px] leading-tight md:text-[55px] md:leading-[1.3] mb-4 font-bold;
@@ -84,6 +88,8 @@
 }
 
 @layer utilities {
+  
+
   .active-link {
     @apply text-secondary transition duration-300 relative after:w-full after:h-[2px] after:rounded-full after:bg-secondary after:absolute after:-bottom-2 after:left-0;
   }
