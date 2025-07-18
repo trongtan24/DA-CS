@@ -95,7 +95,7 @@ const ProductDetail = () => {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                 {book.name}
               </h1>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-start xs:flex-row xs:items-center gap-3">
                 {book.popular && (
                   <span className="bg-yellow-100 text-yellow-800 px-3 py-1 text-xs font-medium rounded-full flex items-center">
                     <FiStar className="mr-1" /> Nổi bật
@@ -111,7 +111,7 @@ const ProductDetail = () => {
 
             <div className="mb-6">
               {book.discount > 0 ? (
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col items-start xs:flex-row xs:items-center gap-4">
                   <span className="text-red-600 font-bold text-3xl">
                     {roundedPrice.toLocaleString()}đ
                   </span>
@@ -137,7 +137,7 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className="mb-8 flex gap-4 items-center">
+            <div className="mb-8 flex flex-col items-start xs:flex-row xs:items-center gap-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Số lượng:
               </label>

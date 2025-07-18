@@ -23,7 +23,7 @@ const BreadCrumb = ({ book, pageCategory, type }) => {
 
   return (
     <>
-      <div className="flex items-center text-sm text-gray-500 w-fit p-1 px-4 mb-6 bg-white ring-1 ring-slate-900/10 rounded-full">
+      <div className="hidden s:flex s:flex-row s:items-center text-sm text-gray-500 w-fit p-1 px-4 mb-6 bg-white ring-1 ring-slate-900/10 rounded-full">
         <ScrollToTop to="/" className="hover:text-secondary">
           Trang chủ
         </ScrollToTop>
