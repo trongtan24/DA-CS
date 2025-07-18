@@ -12,7 +12,7 @@ const guestOrderSchema = new mongoose.Schema({
   created_date: { type: Date },
   expired_date: {
     type: Date,
-    default: () => new Date(Date.now() + 60 * 60 * 1000),
+    default: () => new Date(Date.now() + 30 * 60 * 1000),
   },
   updated_date: { type: Date },
 });

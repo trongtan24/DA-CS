@@ -64,12 +64,10 @@ const passwordSchema = z
     }
   });
 
-// Hàm tạo token JWT
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET);
 };
 
-// Admin login / signin
 const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -97,7 +95,6 @@ const adminLogin = async (req, res) => {
   }
 };
 
-// User login / signin
 const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -132,7 +129,6 @@ const userLogin = async (req, res) => {
   }
 };
 
-// User register / signup
 const userRegister = async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
@@ -208,8 +204,8 @@ const userRegister = async (req, res) => {
       });
     }
 
-    const salt = await bcrypt.genSalt(10); // Tạo salt để băm mật khẩu, băm 10 lần
-    const hashedPassword = await bcrypt.hash(password, salt); // Băm mật khẩu
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await userModel.create({
       name: trimmedName,
@@ -279,7 +275,7 @@ const userGetOtp = async (req, res) => {
           isUsed: false,
           attempts: 0,
           created_date: new Date(),
-          expired_date: new Date(Date.now() + 15 * 60 * 1000),
+          expired_date: new Date(Date.now() + 30 * 60 * 1000),
         },
       },
       { new: true }
@@ -297,7 +293,7 @@ const userGetOtp = async (req, res) => {
         <p>Mã được tạo từ </strong> ${new Date(
           user.otp.created_date
         ).toLocaleString()} </p>
-        <p>Và sẽ bị vô hiệu hoá trong 15 phút: </strong> ${new Date(
+        <p>Và sẽ bị vô hiệu hoá trong: </strong> ${new Date(
           user.otp.expired_date
         ).toLocaleString()} </p>
       `,
@@ -414,7 +410,6 @@ const updateUser = async (req, res) => {
     const { userId, user } = req.body;
 
     if (!userId || !user) {
-      // check login
       return res.json({
         success: false,
         message: "Thiếu thông tin userId hoặc user!",
@@ -436,7 +431,6 @@ const updateUser = async (req, res) => {
 
     const existingUser = await userModel.findOne({ _id: userId });
     if (!existingUser) {
-      // check tồn tại
       return res.json({
         success: false,
         message: "Không tìm thấy người dùng!",
@@ -454,7 +448,6 @@ const updateUser = async (req, res) => {
       (!req.file || user.image === existingUser.image);
 
     if (isUnchanged) {
-      // check thay đổi
       return res.json({
         success: false,
         message: "Không có thay đổi nào để cập nhật",
@@ -508,28 +501,28 @@ const updateUser = async (req, res) => {
       const { city, district, ward, location } = trimmedUser.address;
 
       if (city && city.length < 2) {
-        return res.status(400).json({
+        return res.json({
           success: false,
           message: "Tên thành phố phải có ít nhất 2 ký tự!",
         });
       }
 
       if (district && district.length < 2) {
-        return res.status(400).json({
+        return res.json({
           success: false,
           message: "Tên quận/huyện phải có ít nhất 2 ký tự!",
         });
       }
 
       if (ward && ward.length < 2) {
-        return res.status(400).json({
+        return res.json({
           success: false,
           message: "Tên phường/xã phải có ít nhất 2 ký tự!",
         });
       }
 
       if (location && location.length < 5) {
-        return res.status(400).json({
+        return res.json({
           success: false,
           message: "Địa chỉ cụ thể phải có ít nhất 5 ký tự!",
         });
@@ -539,7 +532,6 @@ const updateUser = async (req, res) => {
     let imageUrl = existingUser.image || "https://placehold.co/600x400";
 
     if (req.file) {
-      // up hình
       console.log("Uploaded File:", req.file);
       imageUrl = await cloudinary.uploader
         .upload(req.file.path, { resource_type: "image" })

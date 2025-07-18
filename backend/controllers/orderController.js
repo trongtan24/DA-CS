@@ -6,10 +6,11 @@ import sendEmail from "../utils/sendEmail.js";
 import validator from "validator";
 import axios from "axios";
 import crypto from "crypto";
+import timer from "../utils/timer.js";
 
+const cancelTimer = { HOUR: 0, MINUTE: 30, SECOND: 0 };
 var accessKey = process.env.MOMO_ACCESS_KEY;
 var secretKey = process.env.MOMO_SECRET_KEY;
-const TIMER = 1;
 
 const createToken = (orderid, name, email, phone) => {
   return jwt.sign({ orderid, name, email, phone }, process.env.JWT_SECRET);
@@ -195,7 +196,7 @@ const placeOrderCOD = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
     });
 
@@ -442,7 +443,7 @@ const momoCallBack = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
       });
     } else {
@@ -512,7 +513,7 @@ const momoStatus = async (req, res) => {
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
     <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
       });
     }
@@ -785,7 +786,7 @@ const placeOrderGuestCOD = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
     });
     const redirectUrl = `/guestorder/${token}`;
@@ -1036,7 +1037,7 @@ const momoCallBackGuest = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
       });
     } else {
@@ -1111,7 +1112,7 @@ const momoStatusGuest = async (req, res) => {
     <a href="${
       process.env.FRONTEND_URL
     }/guestorder/${token}">Xem đơn hàng</a>!</p>
-    <p>Bạn có thể huỷ trong vòng ${TIMER} tiếng!</p>
+    <p>Bạn có thể huỷ trong vòng ${timer(cancelTimer)}</p>
   `,
       });
     }
@@ -1185,7 +1186,7 @@ const guestDeleteOrder = async (req, res) => {
     if (now > order.expired_date) {
       return res.json({
         success: false,
-        message: `Bạn chỉ có thể xoá đơn hàng trong vòng ${TIMER} tiếng sau khi đặt.`,
+        message: `Bạn chỉ có thể xoá đơn hàng trong vòng ${timer(cancelTimer)}`,
       });
     }
 
