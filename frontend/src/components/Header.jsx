@@ -205,7 +205,7 @@ const Header = () => {
             {/* help */}
             <ScrollToTop
               to={"/help"}
-              className="hidden lg:flex hover:text-secondary transition duration-300 hover:border-gray-500 sm:border-b-2 border-white w-fit flex gap-1"
+              className="hidden lg:flex hover:text-secondary transition duration-300 hover:border-gray-500 sm:border-b-2 border-white w-fit gap-1"
             >
               <IoIosHelpCircleOutline className="w-6 h-6" />
               <span className="">Trợ giúp</span>
