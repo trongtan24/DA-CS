@@ -12,7 +12,7 @@ const Login = ({ setToken }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    window.location.href = process.env.VITE_FRONTEND_URL;
+    window.location.href = import.meta.env.VITE_FRONTEND_URL;
   };
 
   const onSubmitHandler = async (e) => {
