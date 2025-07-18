@@ -101,6 +101,12 @@ const Orders = () => {
     } else if (state === "notpay") {
       const filtered = order.filter((o) => o.payment === false);
       setOrderData(filtered);
+    } else if (state === "notcancel") {
+      const filtered = order.filter((o) => o.status !== "Huỷ");
+      setOrderData(filtered);
+    } else if (state === "cancel") {
+      const filtered = order.filter((o) => o.status === "Huỷ");
+      setOrderData(filtered);
     }
   }, [order, state]);
 
@@ -178,6 +184,8 @@ const Orders = () => {
             <option value="incomplete">Chưa hoàn thành</option>
             <option value="payed">Thanh toán</option>
             <option value="notpay">Chưa thanh toán</option>
+            <option value="notcancel">Còn tồn tại</option>
+            <option value="cancel">Đã huỷ</option>
           </select>
           <button
             onClick={loadOrderData}
@@ -274,7 +282,8 @@ const Orders = () => {
 
                 <button
                   className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
-                    (new Date() > new Date(orderItem.expired_date) || orderItem.status === "Huỷ")
+                    new Date() > new Date(orderItem.expired_date) ||
+                    orderItem.status === "Huỷ"
                       ? "!hidden"
                       : ""
                   }`}
