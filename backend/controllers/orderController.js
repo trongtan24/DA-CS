@@ -605,8 +605,8 @@ const userDeleteOrders = async (req, res) => {
         });
       }
     }
-
-    await orderModel.findByIdAndDelete(orderId);
+    order.status = "Huỷ";
+    await order.save();
     res.json({ success: true, message: "Xoá thành công!" });
   } catch (error) {
     console.log(error);
@@ -1208,7 +1208,9 @@ const guestDeleteOrder = async (req, res) => {
       }
     }
 
-    await guestOrderModel.findByIdAndDelete(orderId);
+    order.status = "Huỷ";
+
+    await order.save();
     res.json({ success: true, message: "Xoá thành công!" });
   } catch (error) {
     console.log(error);

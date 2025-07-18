@@ -231,7 +231,7 @@ const GuestOrders = () => {
 
                 <button
                   className={`flexCenter gap-1 cursor-pointer hover:text-red-500 transition-all ${
-                    new Date() > new Date(orderItem.expired_date)
+                    (new Date() > new Date(orderItem.expired_date) || orderItem.status === "Huỷ")
                       ? "!hidden"
                       : ""
                   }`}

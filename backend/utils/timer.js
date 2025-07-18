@@ -1,4 +1,4 @@
-const timer = async ({ HOUR, MINUTE, SECOND }) => {
+const timer = ({ HOUR, MINUTE, SECOND }) => {
   try {
     let result = [];
     if (HOUR && HOUR > 0) {
@@ -18,9 +18,8 @@ const timer = async ({ HOUR, MINUTE, SECOND }) => {
     return result.join(" ") + "!";
   } catch (error) {
     console.log(error);
+    return "Lỗi thời gian!";
   }
 };
-
-timer(object).then(console.log);
 
 export default timer;
