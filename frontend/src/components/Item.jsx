@@ -69,11 +69,11 @@ const Item = ({
         {book.discount != 0 && (
           <span
             className="absolute top-0 left-2.5 bg-red-700 text-white px-0.5 py-2 text-xs font-bold z-10
-                after:content-[''] after:absolute after:-bottom-2 after:right-0
+                after:content-[''] after:absolute after:-bottom-[8px] after:right-0
                 after:w-0 after:h-0 after:border-l-[16px] after:border-l-transparent
                 after:border-t-[8px] after:border-t-red-700
 
-                before:content-[''] before:absolute before:-bottom-2 before:left-0
+                before:content-[''] before:absolute before:-bottom-[8px] before:left-0
                 before:w-0 before:h-0 before:border-r-[16px] before:border-r-transparent
                 before:border-t-[8px] before:border-t-red-700"
           >

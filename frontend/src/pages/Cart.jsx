@@ -173,21 +173,24 @@ const Cart = () => {
         </div>
       </div>
 
-      <div className="fixed items-center sm:hidden p-1 bottom-0 left-0 right-0 bg-white h-12 z-50 border border-t-gray-300">
-        <div className="flexBetween">
-          <div className="flex font-bold gap-2">
-            <div className="hidden 3xs:flex">Tổng: </div> {AfterVAT.toLocaleString()}đ
-          </div>
-          <div className="flex">
-            <ScrollToTop
-              to={"/place-order"}
-              className="btn-secondaryOne !px-2 xs:!px-8 s:!px-16 text-nowrap"
-            >
-              Thanh toán
-            </ScrollToTop>
+      {getCartCount() > 0 && (
+        <div className="fixed items-center sm:hidden p-1 bottom-0 left-0 right-0 bg-white h-12 z-50 border border-t-gray-300">
+          <div className="flexBetween">
+            <div className="flex font-bold gap-2">
+              <div className="hidden 3xs:flex">Tổng: </div>{" "}
+              {AfterVAT.toLocaleString()}đ
+            </div>
+            <div className="flex">
+              <ScrollToTop
+                to={"/place-order"}
+                className="btn-secondaryOne !px-2 xs:!px-8 s:!px-16 text-nowrap"
+              >
+                Thanh toán
+              </ScrollToTop>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

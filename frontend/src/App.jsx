@@ -35,7 +35,7 @@ const App = () => {
       <Header />
       <div className="h-[126px] bg-white max-padd-container"></div>
 
-      <div className="flex relative mx-2 my-4 md:my-8 md:mx-4">
+      <div className="min-h-screen flex relative mx-2 my-4 md:my-8 md:mx-4">
         {/* {isHomePage && <LeftSidebar />} */}
 
         <main className="flex-1 min-w-0 ">

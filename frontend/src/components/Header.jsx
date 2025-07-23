@@ -321,7 +321,7 @@ const Header = () => {
               toggleMenu={toggleMenu}
               containerStyle={`transition duration-300 ${
                 menuOpened
-                  ? "flex flex-col gap-y-8 h-screen w-[222px] fixed left-0 top-[126px] bg-white z-50 px-10 py-4 shadow-xl"
+                  ? "flex flex-col gap-y-8 h-screen w-[222px] fixed left-0 top-[125px] bg-white z-50 px-10 py-4 shadow-xl"
                   : "hidden lg:flex justify-between items-center w-full medium-15"
               }`}
             />
