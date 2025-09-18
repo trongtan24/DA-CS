@@ -241,10 +241,10 @@ const Header = () => {
                       onClick={() => {
                         toggleLogin();
                       }}
-                      className="btn-outline flexCenter gap-x-2 "
+                      className="btn-outline-3xs 3xs:btn-outline flexCenter gap-x-2 "
                     >
                       <span className="text-[16px]">Đăng nhập</span>{" "}
-                      <FaRegUserCircle className="text-[20px]" />
+                      <FaRegUserCircle className="text-[20px] hidden 3xs:block" />
                     </button>
                   </>
                 )}

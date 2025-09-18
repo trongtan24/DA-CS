@@ -16,21 +16,21 @@ const createToken = (orderid, name, email, phone) => {
   return jwt.sign({ orderid, name, email, phone }, process.env.JWT_SECRET);
 };
 
-const adminOrders = async (req, res) => {
+const adminGuestOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({});
-    res.json({ success: true, orders });
+    const guestOrders = await guestOrderModel.find({});
+    res.json({ success: true, guestOrders });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
 
-const placeOrderCOD = async (req, res) => {
+const placeOrderGuestCOD = async (req, res) => {
   try {
-    const { userId, userInfo, items, amount, address } = req.body;
+    const { guestInfo, items, amount, address } = req.body;
 
-    if (!userId || !userInfo || !items || !amount || !address) {
+    if (!guestInfo || !items || !amount || !address) {
       return res.json({
         success: false,
         message: "Không được để trống các thông tin!",
@@ -45,9 +45,9 @@ const placeOrderCOD = async (req, res) => {
     }
 
     const trimmedUserInfo = {
-      name: userInfo.name?.trim() || "",
-      email: userInfo.email?.trim() || "",
-      phone: userInfo.phone?.trim() || "",
+      name: guestInfo.name?.trim() || "",
+      email: guestInfo.email?.trim() || "",
+      phone: guestInfo.phone?.trim() || "",
     };
 
     if (
@@ -96,9 +96,9 @@ const placeOrderCOD = async (req, res) => {
     }
 
     if (
-      address.city.trim().length < 2 ||
-      address.ward.trim().length < 2 ||
-      address.district.trim().length < 2
+      trimmedAddress.city.length < 2 ||
+      trimmedAddress.ward.length < 2 ||
+      trimmedAddress.district.length < 2
     ) {
       return res.json({
         success: false,
@@ -114,11 +114,6 @@ const placeOrderCOD = async (req, res) => {
         success: false,
         message: "Địa chỉ cụ thể phải có ít nhất 5 ký tự!",
       });
-    }
-
-    const user = await userModel.findById(userId);
-    if (!user) {
-      return res.json({ success: false, message: "Người dùng không tồn tại!" });
     }
 
     for (const item of items) {
@@ -159,8 +154,7 @@ const placeOrderCOD = async (req, res) => {
     }
 
     const orderData = {
-      userId,
-      userInfo: trimmedUserInfo,
+      guestInfo: trimmedUserInfo,
       items,
       amount,
       address: trimmedAddress,
@@ -170,11 +164,16 @@ const placeOrderCOD = async (req, res) => {
       updated_date: new Date(),
     };
 
-    const newOrder = new orderModel(orderData);
+    const newGuestOrder = new guestOrderModel(orderData);
 
-    await newOrder.save();
+    await newGuestOrder.save();
 
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    const token = createToken(
+      newGuestOrder._id,
+      trimmedUserInfo.name,
+      trimmedUserInfo.email,
+      trimmedUserInfo.phone
+    );
 
     await sendEmail({
       to: trimmedUserInfo.email,
@@ -185,25 +184,29 @@ const placeOrderCOD = async (req, res) => {
     <p><strong>Tổng tiền:</strong> ${amount.toLocaleString()} VND</p>
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
-    <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
+    <a href="${
+      process.env.FRONTEND_URL
+    }/guestorder/${token}">Xem đơn hàng</a>!</p>
     <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
     });
-
+    const redirectUrl = `/guestorder/${token}`;
     res.json({
       success: true,
-      message: "Đặt hàng thành công, vui lòng kiểm tra gmail!",
+      message: "Đặt hàng thành công (khách)!",
+      redirectUrl,
     });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message + "guest" });
   }
 };
 
-const placeOrderMomo = async (req, res) => {
+const placeOrderMomoGuest = async (req, res) => {
   try {
-    const { userId, userInfo, items, amount, address } = req.body;
-    if (!userId || !userInfo || !items || !amount || !address) {
+    const { guestInfo, items, amount, address } = req.body;
+
+    if (!guestInfo || !items || !amount || !address) {
       return res.json({
         success: false,
         message: "Không được để trống các thông tin!",
@@ -218,9 +221,9 @@ const placeOrderMomo = async (req, res) => {
     }
 
     const trimmedUserInfo = {
-      name: userInfo.name?.trim() || "",
-      email: userInfo.email?.trim() || "",
-      phone: userInfo.phone?.trim() || "",
+      name: guestInfo.name?.trim() || "",
+      email: guestInfo.email?.trim() || "",
+      phone: guestInfo.phone?.trim() || "",
     };
 
     if (
@@ -269,9 +272,9 @@ const placeOrderMomo = async (req, res) => {
     }
 
     if (
-      address.city.trim().length < 2 ||
-      address.ward.trim().length < 2 ||
-      address.district.trim().length < 2
+      trimmedAddress.city.length < 2 ||
+      trimmedAddress.ward.length < 2 ||
+      trimmedAddress.district.length < 2
     ) {
       return res.json({
         success: false,
@@ -287,11 +290,6 @@ const placeOrderMomo = async (req, res) => {
         success: false,
         message: "Địa chỉ cụ thể phải có ít nhất 5 ký tự!",
       });
-    }
-
-    const user = await userModel.findById(userId);
-    if (!user) {
-      return res.json({ success: false, message: "Người dùng không tồn tại!" });
     }
 
     for (const item of items) {
@@ -332,12 +330,11 @@ const placeOrderMomo = async (req, res) => {
     }
 
     const orderId = "B8K" + new Date().getTime();
-    await orderModel.create({
-      userId,
-      userInfo: trimmedUserInfo,
+    const newGuestOrder = await guestOrderModel.create({
+      guestInfo,
       items,
       amount,
-      address: trimmedAddress,
+      address,
       paymentMethod: "MOMO",
       payment: false,
       status: "Chờ xác nhận",
@@ -346,13 +343,20 @@ const placeOrderMomo = async (req, res) => {
       updated_date: new Date(),
     });
 
+    const token = createToken(
+      newGuestOrder._id,
+      trimmedUserInfo.name,
+      trimmedUserInfo.email,
+      trimmedUserInfo.phone
+    );
+
     const partnerCode = "MOMO";
     const requestId = orderId;
     const orderInfo = "Thanh toán đơn hàng tại B8K";
-    const redirectUrl = `${process.env.FRONTEND_URL}/verifymomo`;
-    const ipnUrl = `${process.env.BACKEND_URL}/api/order/momocallback`;
+    const redirectUrl = `${process.env.FRONTEND_URL}/verifymomoguest`;
+    const ipnUrl = `${process.env.BACKEND_URL}/api/order/momocallbackguest`;
     const requestType = "captureWallet";
-    const extraData = "";
+    const extraData = token;
 
     const rawSignature = `accessKey=${accessKey}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
     const signature = crypto
@@ -383,6 +387,7 @@ const placeOrderMomo = async (req, res) => {
       requestBody,
       {
         headers: { "Content-Type": "application/json" },
+        headers: { token },
       }
     );
 
@@ -393,19 +398,19 @@ const placeOrderMomo = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.json({ success: false, message: error.message });
+    return res.json({ success: false, message: "Đặt hàng Momo thất bại!" });
   }
 };
 
-const momoCallBack = async (req, res) => {
-  // cần up lên web thật GG hết cứu
+const momoCallBackGuest = async (req, res) => {
   try {
-    console.log("MoMo callback:", req.body);
+    console.log("MoMo callback received:", req.body);
 
     const { orderId, resultCode, amount } = req.body;
+    const { token } = req.headers;
 
     if (resultCode === 0) {
-      const updatedOrder = await orderModel.findOneAndUpdate(
+      const updatedOrder = await guestOrderModel.findOneAndUpdate(
         { momoOrderId: orderId },
         {
           payment: true,
@@ -419,25 +424,25 @@ const momoCallBack = async (req, res) => {
         return res.json({ error: "Không tìm thấy đơn hàng!" });
       }
 
-      const order = await orderModel.findOne({ momoOrderId: orderId });
-      const user = await userModel.findById(order.userId);
-      await userModel.findByIdAndUpdate(order.userId, { cartData: {} });
+      const order = await guestOrderModel.findOne({ momoOrderId: orderId });
 
       await sendEmail({
-        to: user.email,
+        to: order.guestInfo.email,
         subject: "Xác nhận đơn hàng từ B8K",
         html: `
-    <h2>Xin chào ${user.name},</h2>
+    <h2>Xin chào ${order.guestInfo.name},</h2>
     <p>Chúng tôi đã nhận được đơn hàng của bạn.</p>
     <p><strong>Tổng tiền:</strong> ${amount.toLocaleString()} VND</p>
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
-    <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
+    <a href="${
+      process.env.FRONTEND_URL
+    }/guestorder/${token}">Xem đơn hàng</a>!</p>
     <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     } else {
-      console.warn(`Thanh toán thất bại: ${orderId}. Code: ${resultCode}`);
+      console.warn(`Payment failed for order ${orderId}. Code: ${resultCode}`);
     }
 
     return res.json({ message: "Callback processed" });
@@ -450,11 +455,10 @@ const momoCallBack = async (req, res) => {
   }
 };
 
-const momoStatus = async (req, res) => {
-  // dùng từ verifymomo tạm bợ :))
+const momoStatusGuest = async (req, res) => {
   try {
     const { orderId, amount } = req.body;
-
+    const { token } = req.headers;
     const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
     const signature = crypto
       .createHmac("sha256", secretKey)
@@ -480,35 +484,43 @@ const momoStatus = async (req, res) => {
 
     const response = await axios(option);
     const momoRes = response.data;
-    console.log(momoRes);
+
     if (momoRes.resultCode === 0 && momoRes.orderId) {
-      await orderModel.findOneAndUpdate(
+      const updatedOrder = await guestOrderModel.findOneAndUpdate(
         { momoOrderId: momoRes.orderId },
         {
           payment: true,
           updated_date: new Date(),
         }
       );
-      const order = await orderModel.findOne({ momoOrderId: momoRes.orderId });
-      const user = await userModel.findById(order.userId);
-      await userModel.findByIdAndUpdate(order.userId, { cartData: {} });
+
+      if (!updatedOrder) {
+        console.error("Không tìm thấy đơn hàng với momoOrderId: ", orderId);
+        return res.json({ error: "Không tìm thấy đơn hàng!" });
+      }
+
+      const order = await guestOrderModel.findOne({ momoOrderId: orderId });
 
       await sendEmail({
-        to: user.email,
+        to: order.guestInfo.email,
         subject: "Xác nhận đơn hàng từ B8K",
         html: `
-    <h2>Xin chào ${user.name},</h2>
+    <h2>Xin chào ${order.guestInfo.name},</h2>
     <p>Chúng tôi đã nhận được đơn hàng của bạn.</p>
     <p><strong>Tổng tiền:</strong> ${amount.toLocaleString()} VND</p>
     <p>Cảm ơn bạn đã đặt hàng!</p>
     <p>Nếu bạn muốn xem đơn hàng, xin vui lòng nhấn vào link này: 
-    <a href="${process.env.FRONTEND_URL}/orders">Xem đơn hàng</a>!</p>
+    <a href="${
+      process.env.FRONTEND_URL
+    }/guestorder/${token}">Xem đơn hàng</a>!</p>
     <p>Thời gian cho phép huỷ đơn hàng là ${timer(cancelTimer)}</p>
   `,
       });
     }
 
-    return res.json({ success: true, momoRes });
+    const redirectUrl = `/guestorder/${token}`;
+
+    return res.json({ success: true, momoRes, redirectUrl });
   } catch (error) {
     console.error(error);
     return res.json({
@@ -518,40 +530,22 @@ const momoStatus = async (req, res) => {
   }
 };
 
-const userOrders = async (req, res) => {
-  try {
-    const { userId } = req.body;
-    const orders = await orderModel.find({ userId });
-    res.json({ success: true, orders });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
-  }
-};
-
-const updateStatus = async (req, res) => {
+const updateGuestStatus = async (req, res) => {
   try {
     const { orderId, status, method } = req.body;
     let payment = status === "Đã hoàn tất";
-
-    const order = await orderModel.findById(orderId);
-    if (!order) {
-      return res.json({ success: false, message: "Không tìm thấy đơn hàng" });
-    }
-
     if (method !== "MOMO") {
-      await orderModel.findByIdAndUpdate(orderId, {
+      await guestOrderModel.findByIdAndUpdate(orderId, {
         status,
         payment,
         updated_date: Date.now(),
       });
     } else {
-      await orderModel.findByIdAndUpdate(orderId, {
+      await guestOrderModel.findByIdAndUpdate(orderId, {
         status,
         updated_date: Date.now(),
       });
     }
-
     res.json({ success: true, message: "Hoàn tất cập nhật đơn!" });
   } catch (error) {
     console.log(error);
@@ -559,11 +553,31 @@ const updateStatus = async (req, res) => {
   }
 };
 
-const userDeleteOrders = async (req, res) => {
+const guestOrders = async (req, res) => {
   try {
-    const { orderId } = req.body;
+    const orderId = req.guestOrderId;
 
-    const order = await orderModel.findById(orderId);
+    const order = await guestOrderModel.findById(orderId);
+
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "Không tìm thấy sản phẩm!",
+      });
+    }
+
+    res.json({ success: true, order });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const guestDeleteOrder = async (req, res) => {
+  try {
+    const orderId = req.guestOrderId;
+
+    const order = await guestOrderModel.findById(orderId);
     if (!order) {
       return res.json({ success: false, message: "Không tìm thấy đơn hàng!" });
     }
@@ -602,7 +616,7 @@ const userDeleteOrders = async (req, res) => {
           quantity: item.amount,
         }
       );
-      console.log(resSales.data.message + " user");
+      console.log(resSales.data.message + " guest");
 
       if (!resSales.data.success) {
         return res.json({
@@ -611,7 +625,9 @@ const userDeleteOrders = async (req, res) => {
         });
       }
     }
+
     order.status = "Huỷ";
+
     await order.save();
     res.json({ success: true, message: "Huỷ thành công!" });
   } catch (error) {
@@ -621,12 +637,12 @@ const userDeleteOrders = async (req, res) => {
 };
 
 export {
-  placeOrderCOD,
-  placeOrderMomo,
-  momoCallBack,
-  momoStatus,
-  adminOrders,
-  userOrders,
-  updateStatus,
-  userDeleteOrders,
+  adminGuestOrders,
+  placeOrderGuestCOD,
+  guestDeleteOrder,
+  updateGuestStatus,
+  guestOrders,
+  placeOrderMomoGuest,
+  momoCallBackGuest,
+  momoStatusGuest,
 };

@@ -1,5 +1,3 @@
-// Create a reusable AddModal component from your Add form
-
 import React, { useState } from "react";
 import upload_icon from "../assets/upload_icon.png";
 import { toast } from "react-toastify";

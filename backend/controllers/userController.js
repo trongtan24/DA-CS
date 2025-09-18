@@ -394,7 +394,7 @@ const userResetPassword = async (req, res) => {
 const getUserInfo = async (req, res) => {
   try {
     const { userId } = req.body;
-    const userData = await userModel.findById(userId).select("-password"); // Không trả về mật khẩu
+    const userData = await userModel.findById(userId).select("-password");
     if (!userData) {
       return res.json({ success: false, message: "Người dùng không tồn tại!" });
     }

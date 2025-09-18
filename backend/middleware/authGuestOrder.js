@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-// middleware này dùng để xác thực người dùng
+// xác thực khách vãng lai
 // kiểm tra xem người dùng đã đăng nhập hay chưa bằng cách kiểm tra token trong header(orderid, name, email, phone)
 const authUser = async (req, res, next) => {
   const { token } = req.headers;

@@ -78,12 +78,6 @@ const Contact = () => {
         ></iframe>
       ),
     },
-    // {
-    //   city: "Hồ Chí Minh",
-    //   address: "",
-    //   hours: "8:00 - 21:00 hàng ngày",
-    //   phone: "028 7100 0888"
-    // }
   ];
 
   const faqs = [
@@ -91,11 +85,6 @@ const Contact = () => {
       question: "Thời gian phản hồi email trong bao lâu?",
       answer: "Chúng tôi phản hồi email trong vòng 24 giờ làm việc.",
     },
-    // {
-    //   question: "Có thể đến trực tiếp cửa hàng để được tư vấn không?",
-    //   answer:
-    //     "Hoàn toàn có thể! Chúng tôi luôn sẵn lòng đón tiếp bạn tại các cửa hàng trong giờ làm việc.",
-    // },
     {
       question: "Làm cách nào để phản ánh về chất lượng dịch vụ?",
       answer:
@@ -146,70 +135,6 @@ const Contact = () => {
           </div>
         ))}
       </div>
-
-      {/* <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-16">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Gửi tin nhắn cho chúng tôi</h2>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Họ và tên*</label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
-            <input
-              type="tel"
-              id="phone"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Chủ đề*</label>
-            <select
-              id="subject"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            >
-              <option value="">Chọn chủ đề</option>
-              <option value="order">Hỏi về đơn hàng</option>
-              <option value="product">Hỏi về sản phẩm</option>
-              <option value="return">Đổi trả/hoàn tiền</option>
-              <option value="other">Khác</option>
-            </select>
-          </div>
-          <div className="md:col-span-2">
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Nội dung*</label>
-            <textarea
-              id="message"
-              rows="4"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            ></textarea>
-          </div>
-          <div className="md:col-span-2">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-            >
-              Gửi tin nhắn
-            </button>
-          </div>
-        </form>
-      </div> */}
-
       <div className="mb-16">
         <h2 className="text-2xl text-center font-bold text-gray-800 mb-6">
           Vị trí cửa hàng trên bản đồ

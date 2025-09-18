@@ -1,45 +1,29 @@
 import express from "express";
 import adminAuth from "../middleware/adminAuth.js";
-import {
-  adminOrders,
-  placeOrderCOD,
-  placeOrderMomo,
-  updateStatus,
-  userOrders,
-  placeOrderGuestCOD,
-  userDeleteOrders,
-  guestDeleteOrder,
-  adminGuestOrders,
-  updateGuestStatus,
-  guestOrders,
-  momoCallBack,
-  momoStatus,
-  placeOrderMomoGuest,
-  momoCallBackGuest,
-  momoStatusGuest,
-} from "../controllers/orderController.js";
+import * as order from "../controllers/orderController.js";
+import * as guestOrder from "../controllers/guestOrderController.js";
 import authUser from "../middleware/auth.js";
 import authGuestOrder from "../middleware/authGuestOrder.js";
 
 const orderRouter = express.Router();
 
-orderRouter.post("/list", adminAuth, adminOrders);
-orderRouter.post("/listguest", adminAuth, adminGuestOrders);
-orderRouter.post("/status", adminAuth, updateStatus);
-orderRouter.post("/gueststatus", adminAuth, updateGuestStatus);
+orderRouter.post("/list", adminAuth, order.adminOrders);
+orderRouter.post("/status", adminAuth, order.updateStatus);
+orderRouter.post("/listguest", adminAuth, guestOrder.adminGuestOrders);
+orderRouter.post("/gueststatus", adminAuth, guestOrder.updateGuestStatus);
 
-orderRouter.post("/placecod", authUser, placeOrderCOD);
-orderRouter.post("/placemomo", authUser, placeOrderMomo);
-orderRouter.post("/momocallback", momoCallBack);
-orderRouter.post("/momostatus", momoStatus);
-orderRouter.post("/userorders", authUser, userOrders);
-orderRouter.post("/usercancelorder", authUser, userDeleteOrders);
+orderRouter.post("/placecod", authUser, order.placeOrderCOD);
+orderRouter.post("/placemomo", authUser, order.placeOrderMomo);
+orderRouter.post("/momocallback", order.momoCallBack);
+orderRouter.post("/momostatus", order.momoStatus);
+orderRouter.post("/userorders", authUser, order.userOrders);
+orderRouter.post("/usercancelorder", authUser, order.userDeleteOrders);
 
-orderRouter.post("/placecodguest", placeOrderGuestCOD);
-orderRouter.post("/placemomoguest", placeOrderMomoGuest);
-orderRouter.post("/momocallbackguest", authGuestOrder, momoCallBackGuest);
-orderRouter.post("/momostatusguest", authGuestOrder, momoStatusGuest);
-orderRouter.post("/guestorders", authGuestOrder, guestOrders);
-orderRouter.post("/guestcancelorder", authGuestOrder, guestDeleteOrder);
+orderRouter.post("/placecodguest", guestOrder.placeOrderGuestCOD);
+orderRouter.post("/placemomoguest", guestOrder.placeOrderMomoGuest);
+orderRouter.post("/momocallbackguest", authGuestOrder, guestOrder.momoCallBackGuest);
+orderRouter.post("/momostatusguest", authGuestOrder, guestOrder.momoStatusGuest);
+orderRouter.post("/guestorders", authGuestOrder, guestOrder.guestOrders);
+orderRouter.post("/guestcancelorder", authGuestOrder, guestOrder.guestDeleteOrder);
 
 export default orderRouter;

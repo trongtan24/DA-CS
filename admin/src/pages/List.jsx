@@ -148,7 +148,6 @@ const List = ({ token }) => {
           </div>
           <div className="max-h-[60vh] overflow-y-auto">
             {" "}
-            {/* dùng overflow vs max height để scroll */}
             {searchList.length > 0 ? (
               searchList.map((item) => (
                 <div

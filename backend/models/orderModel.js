@@ -18,8 +18,6 @@ const orderSchema = new mongoose.Schema({
   updated_date: { type: Date },
 });
 
-// kiểm tra xem mô hình đã tồn tại chưa, nếu chưa thì tạo mới
-// mongoose.models.order sẽ chứa các mô hình đã được định nghĩa
 const orderModel =
   mongoose.models.order || mongoose.model("order", orderSchema);
 

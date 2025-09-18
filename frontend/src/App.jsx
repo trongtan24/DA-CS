@@ -6,23 +6,7 @@ import {
   LeftSidebar,
   ScrollToTopBtn,
 } from "./components";
-import {
-  Home,
-  Shop,
-  Cart,
-  PlaceOrder,
-  Orders,
-  Error,
-  ProductDetail,
-  Profile,
-  Settings,
-  Contact,
-  Help,
-  AudioBookDetail,
-  GuestOrders,
-  VerifyMomo,
-  VerifyMomoGuest,
-} from "./pages";
+import * as Pages from "./pages";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ShopContext } from "./context/ShopContext";
@@ -40,35 +24,35 @@ const App = () => {
 
         <main className="flex-1 min-w-0 ">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Pages.Home />} />
 
             {/* Shop */}
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/shop/:pageCategory" element={<Shop />} />
+            <Route path="/shop" element={<Pages.Shop />} />
+            <Route path="/shop/:pageCategory" element={<Pages.Shop />} />
             <Route
               path="/shop/:pageCategory/:seo"
-              element={<ProductDetail />}
+              element={<Pages.ProductDetail />}
             />
             <Route
               path="/shop/:type/:pageCategory/:seo"
-              element={<AudioBookDetail />}
+              element={<Pages.AudioBookDetail />}
             />
-            <Route path="/verifymomo" element={<VerifyMomo />} />
-            <Route path="/verifymomoguest" element={<VerifyMomoGuest />} />
+            <Route path="/verifymomo" element={<Pages.VerifyMomo />} />
+            <Route path="/verifymomoguest" element={<Pages.VerifyMomoGuest />} />
 
             {/* Misc */}
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/place-order" element={<PlaceOrder />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/guestorder/:token" element={<GuestOrders />} />
+            <Route path="/cart" element={<Pages.Cart />} />
+            <Route path="/place-order" element={<Pages.PlaceOrder />} />
+            <Route path="/orders" element={<Pages.Orders />} />
+            <Route path="/guestorder/:token" element={<Pages.GuestOrders />} />
 
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/help" element={<Help />} />
+            <Route path="/profile" element={<Pages.Profile />} />
+            <Route path="/settings" element={<Pages.Settings />} />
+            <Route path="/contact" element={<Pages.Contact />} />
+            <Route path="/help" element={<Pages.Help />} />
 
             {/* Error */}
-            <Route path="*" element={<Error />} />
+            <Route path="*" element={<Pages.Error />} />
           </Routes>
         </main>
 

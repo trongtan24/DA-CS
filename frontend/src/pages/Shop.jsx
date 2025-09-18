@@ -197,19 +197,20 @@ const Shop = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="btn-secondaryToOne disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50"
+            className="xs:btn-secondaryToOne-disabled btn-secondaryToOne-disabled-xs"
           >
             Trước
           </button>
-          <span className="medium-16">
-            Trang {currentPage} / {totalPages}
+          <span className="flexCenter flex-col medium-16">
+            <span className="hidden 2xs:block">Trang</span>
+            {currentPage} / {totalPages}
           </span>
           <button
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="btn-secondaryToOne disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50"
+            className="xs:btn-secondaryToOne-disabled btn-secondaryToOne-disabled-xs"
           >
             Sau
           </button>
@@ -233,23 +234,24 @@ const Shop = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flexCenter gap-4 mt-8">
+        <div className="flexCenter flex-col 3xs:flex-row gap-4 mt-8 mb-8">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="btn-secondaryToOne disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50"
+            className="xs:btn-secondaryToOne-disabled btn-secondaryToOne-disabled-xs"
           >
             Trước
           </button>
-          <span className="medium-16">
-            Trang {currentPage} / {totalPages}
+          <span className="flexCenter flex-col medium-16">
+            <span className="hidden 2xs:block">Trang</span>
+            <span className="text-nowrap">{currentPage} / {totalPages}</span>
           </span>
           <button
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="btn-secondaryToOne disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50"
+            className="xs:btn-secondaryToOne-disabled btn-secondaryToOne-disabled-xs"
           >
             Sau
           </button>

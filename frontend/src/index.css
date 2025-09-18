@@ -54,7 +54,7 @@
 }
 
 .custom-toast-container {
-  top: 126px !important;
+  /* top: 126px !important; */
 }
 
 @layer base {
@@ -88,8 +88,6 @@
 }
 
 @layer utilities {
-  
-
   .active-link {
     @apply text-secondary transition duration-300 relative after:w-full after:h-[2px] after:rounded-full after:bg-secondary after:absolute after:-bottom-2 after:left-0;
   }
@@ -114,6 +112,10 @@
     @apply medium-14 bg-white ring-2 ring-white px-4 py-2.5 rounded-full hover:bg-primary hover:ring-secondary transition-all duration-300;
   }
 
+  .btn-outline-3xs {
+    @apply medium-14 bg-white ring-2 ring-white px-1 py-2.5 rounded-full hover:bg-primary hover:ring-secondary transition-all duration-300;
+  }
+
   .btn-secondary {
     @apply medium-14 bg-secondary ring-1 ring-secondary text-white px-7 py-2.5 rounded-full hover:ring-secondaryDark hover:bg-secondaryDark transition duration-300 active:bg-secondaryDarker active:ring-secondaryDarker;
   }
@@ -128,6 +130,22 @@
 
   .btn-oneToSecondary {
     @apply medium-14 bg-secondaryOne ring-1 ring-secondaryOne text-tertiary px-7 py-2.5 rounded-full hover:ring-secondary hover:text-white hover:bg-secondary transition duration-300 active:bg-secondaryDarker active:ring-secondaryDarker active:text-white;
+  }
+
+  .btn-secondaryToOne-xs {
+    @apply medium-14 bg-secondary ring-1 ring-secondary text-white px-3.5 py-2.5 rounded-full hover:ring-secondaryOne hover:text-tertiary hover:bg-secondaryOne transition duration-300  active:bg-secondaryOneDarker active:ring-secondaryOneDarker active:text-tertiary;
+  }
+
+  .btn-oneToSecondary-xs {
+    @apply medium-14 bg-secondaryOne ring-1 ring-secondaryOne text-tertiary px-3.5 py-2.5 rounded-full hover:ring-secondary hover:text-white hover:bg-secondary transition duration-300 active:bg-secondaryDarker active:ring-secondaryDarker active:text-white;
+  }
+
+  .btn-secondaryToOne-disabled {
+    @apply btn-secondaryToOne disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50;
+  }
+
+  .btn-secondaryToOne-disabled-xs {
+    @apply btn-secondaryToOne-xs disabled:bg-secondary disabled:ring-secondary disabled:text-white disabled:opacity-50;
   }
 
   .max-padd-container {

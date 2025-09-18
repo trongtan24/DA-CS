@@ -58,7 +58,6 @@ const PlaceOrder = () => {
     const isText = /^[\p{L}\s]*$/u; // \p{L} cho phép tất cả các chữ, u - unicode
     const nameRegex = /^(?:\p{L}{2,})(?: \p{L}{2,})*$/u;
 
-    // Common empty field check
     if (!value.trim() && fieldName !== "location") {
       error = `Vui lòng nhập ${
         fieldName === "name"

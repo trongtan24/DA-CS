@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import { Titles, Item } from ".";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -117,15 +117,17 @@ const BookSlides = ({
         modules={[Pagination, Autoplay]}
         className={classes()}
       >
-        {BookSlide.map((books) => (
-          <SwiperSlide key={books._id}>
-            <Item
-              book={books}
-              showSales={isShownSale}
-              showDescription={isShownDescription}
-            />
-          </SwiperSlide>
-        ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          {BookSlide.map((books) => (
+            <SwiperSlide key={books._id}>
+              <Item
+                book={books}
+                showSales={isShownSale}
+                showDescription={isShownDescription}
+              />
+            </SwiperSlide>
+          ))}
+        </Suspense>
       </Swiper>
     </section>
   );

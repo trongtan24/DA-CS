@@ -28,8 +28,6 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-// kiểm tra xem mô hình đã tồn tại chưa, nếu chưa thì tạo mới
-// mongoose.models.product sẽ chứa các mô hình đã được định nghĩa
 const productModel =
   mongoose.models.product || mongoose.model("product", productSchema);
 

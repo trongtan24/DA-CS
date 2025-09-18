@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-// middleware này dùng để xác thực người dùng là admin
+// xác thực người dùng là admin
 // Kiểm tra xem người dùng đã đăng nhập với quyền admin hay chưa bằng cách kiểm tra token giống với email password của .env
 const adminAuth = async (req, res, next) => {
   try {

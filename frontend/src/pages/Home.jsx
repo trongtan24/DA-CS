@@ -25,15 +25,6 @@ const Home = () => {
       <BookSlides
         SlideStart={0}
         SlideEnd={10}
-        to="news"
-        title={"Sách mới"}
-        isShownSale={true}
-        isShownDescription={true}
-        type="news"
-      />
-      <BookSlides
-        SlideStart={0}
-        SlideEnd={10}
         to="popular"
         title={"Sách nổi bật"}
         isShownSale={true}
